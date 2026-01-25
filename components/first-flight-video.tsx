@@ -58,13 +58,13 @@ export function FirstFlightVideo() {
         <video
           ref={videoRef}
           className="size-full object-cover"
-          poster="/images/video-poster.jpg"
+          //poster="/images/video-poster.jpg"
           muted={isMuted}
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}
           playsInline
         >
-          <source src="/videos/first-flight.mp4" type="video/mp4" />
+          <source src="/videos/first-flight.mp4" type="video/`mp4`" />
           Your browser does not support the video tag.
         </video>
 

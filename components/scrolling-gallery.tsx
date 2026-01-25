@@ -6,28 +6,46 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 const buildImages = [
   {
-    src: "/images/build-1.jpg",
-    alt: "Drone frame assembly",
-    title: "Frame Assembly",
-    description: "Carbon fiber frame construction begins",
+    src: "/images/foam-wing.png",
+    alt: "Cut out foam wing",
+    title: "Wing Fabrication",
+    description: "Constructing the foam wings",
   },
   {
-    src: "/images/build-2.jpg",
-    alt: "Motor installation",
-    title: "Motor Installation",
-    description: "Mounting brushless motors to the frame",
+    src: "/images/servos.png",
+    alt: "Servo cuttouts in foam wing",
+    title: "Servo Mock Cutouts",
+    description: "Creating precise cutouts for servo installation",
   },
   {
-    src: "/images/build-3.jpg",
-    alt: "Electronics wiring",
-    title: "Electronics Integration",
-    description: "Flight controller and ESC wiring",
+    src: "/images/Aleron-cuts.png",
+    alt: "Aleron cuts in foam wing",
+    title: "Aileron Cuts",
+    description: "Creating precise cutouts for aileron movement",
   },
   {
-    src: "/images/build-4.jpg",
-    alt: "Completed drone",
-    title: "Final Assembly",
-    description: "Ready for the first flight test",
+    src: "/images/tubing.png",
+    alt: "Assembling T-joints to the carbon fiber tubing",
+    title: "Spar Connections with T-Joints",
+    description: "Connecting carbon fiber tubing spars using T-joints",
+  },
+  {
+    src: "/images/resining-tube-to-wing.png",
+    alt: "Resining the carbon fiber tubing to the foam wing",
+    title: "Resining the Spars to the Wings",
+    description: "Applying resin to secure the spars to the foam wings",
+  },
+    {
+    src: "/images/resined-wings.png",
+    alt: "fiberglass resined wings",
+    title: "Fiberglass Resining the Wings",
+    description: "Applying fiberglass and resin over the foam wings for strength",
+  },
+  {
+    src: "/images/iteration-1-with-cone.png",
+    alt: "Completed wings with carbon fiber tubes and fuselage cone",
+    title: "Final Assembly of Iteration 1",
+    description: "Final assembly of wings, fuselage, and components for first iteration without the electronics",
   },
 ];
 

@@ -26,12 +26,7 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-32">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm">
-                <span className="size-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-sm font-medium text-primary">
-                  Engineering Excellence
-                </span>
-              </div>
+              
               <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-6xl lg:text-7xl text-balance">
                 Building the Future of{" "}
                 <span className="text-primary">Flight</span>
@@ -241,21 +236,14 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-2">
-              <div className="flex size-6 items-center justify-center rounded bg-primary">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="size-4 text-primary-foreground"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <span className="text-sm font-medium text-foreground">
-                Project Falcon
+              <img
+                src="/Quetzal-logo.png"
+                alt="Quetzal"
+                width={48}
+                height={48}
+              />
+              <span className="text-lg font-semibold text-foreground">
+                Quetzal
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
