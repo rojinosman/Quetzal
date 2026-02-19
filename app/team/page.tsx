@@ -224,7 +224,7 @@ export default function TeamPage() {
                 </svg>
               </div>
               <span className="text-sm font-medium text-foreground">
-                Project Falcon
+                Quetzal
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
