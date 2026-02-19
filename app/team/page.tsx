@@ -4,12 +4,13 @@ import { Navigation } from "@/components/navigation";
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
 
 const teamMembers: TeamMember[] = [
+  // Electrical and Computer Engineering Team
   {
     name: "Rojin Osman",
-    role: "Electrical and Computer Engineering Team Lead",
+    role: "ECE Lead",
     description:
-      "Overseeing project management, systems integration, and overall design architecture.",
-    image: "/images/team/Rojin.jpg",
+      "Electrical and Computer Engineering team. Overseeing project management, systems integration, and overall design architecture.",
+    image: "/images/team/Rojin.JPG",
     linkedin: "rojin-osman",
     resumeUrl: "/resumes/rojin-osman.pdf",
     resumeHighlights: [
@@ -17,15 +18,51 @@ const teamMembers: TeamMember[] = [
       "Minored in Mathematics, San Diego State University",
       "Fluent in C, Python, React, and Node.js",
       "Experience with embedded systems",
-
     ],
   },
   {
+    name: "Riley McGregor",
+    role: "Avionics Integration Engineer",
+    description: "Electrical and Computer Engineering team. Avionics systems integration and flight operations.",
+    image: "/images/team/riley.png",
+    linkedin: "riley-conan-mcgregor",
+    resumeUrl: "/resumes/Riley-Resume.pdf",
+    resumeHighlights: [],
+  },
+  {
+    name: "Ismael Villavicencio",
+    role: "Electrical Integration Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/ismael.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Burak Ozhan",
+    role: "Control Systems Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/burak.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Jack Slaten",
+    role: "Power Systems Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/jack.png",
+    linkedin: "jack-slaten",
+    resumeUrl: "/resumes/jack.pdf",
+    resumeHighlights: [],
+  },
+  // Mechanical Engineering Team
+  {
     name: "Utku Solmaz",
-    role: "Mechanical Engineer Team Lead",
+    role: "ME Lead",
     description:
-      "na",
-    image: "/images/team/Utku.png",
+      "Mechanical Engineering team. Leading mechanical design and fabrication efforts.",
+    image: "/images/team/utku.png",
     linkedin: "utku-solmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
     resumeHighlights: [
@@ -34,112 +71,77 @@ const teamMembers: TeamMember[] = [
     ],
   },
   {
-    name: "Riley McGregor",
-    role: "Avionics Engineer & Pilot",
-    description:
-      "na",
-    image: "/images/team/riley.png",
-    linkedin: "riley-conan-mcgregor",
-    resumeUrl: "/resumes/Riley-Resume.pdf",
-    resumeHighlights: [
-      "na",
-    ],
+    name: "Laith Abouhasoun",
+    role: "Procurement Lead",
+    description: "Mechanical Engineering team.",
+    image: "/images/team/laith.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Gavin Rask",
+    role: "Structures Engineer",
+    description: "Mechanical Engineering team.",
+    image: "/images/team/gavin.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Christian Mandigma",
+    role: "Mechanical Design Engineer",
+    description: "Mechanical Engineering team.",
+    image: "/images/team/ChristianM.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Jonah Olsen",
+    role: "Mechanical Design Engineer",
+    description: "Mechanical Engineering team.",
+    image: "/images/team/jonah.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  // Aerospace Engineering Team
+  {
+    name: "Christian Rosete",
+    role: "AE Lead",
+    description: "Aerospace Engineering team.",
+    image: "/images/team/cristian.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
   },
   {
     name: "Maxwell Weaver",
-    role: "Systems Integration Lead",
-    description:
-      "na",
+    role: "Mechanical Integration Engineer",
+    description: "Aerospace Engineering team.",
     image: "/images/team/max.png",
     linkedin: "maxwell-weaver",
     resumeUrl: "/resumes/Maxwell-Weaver-Resume.pdf",
-    resumeHighlights: [
-      "na",
-    ],
+    resumeHighlights: [],
   },
   {
-    name: "Jack Slaten",
-    role: "Power Systems Engineer",
-    description:
-      "na",
-    image: "/images/team/jack.png",
-    linkedin: "jack-slaten",
-    resumeUrl: "/resumes/jack.pdf",
-    resumeHighlights: [
-      "na",
-    ],
+    name: "Kyle Loutzenhiser",
+    role: "Aerodynamics Engineer",
+    description: "Aerospace Engineering team.",
+    image: "/images/team/kyle.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
   },
   {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
-  },
-    {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
-  },
-    {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
-  },
-    {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
-  },
-    {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
-  },
-    {
-    name: "na",
-    role: "na",
-    description:
-      "na",
-    image: "na",
-    linkedin: "na",
-    resumeUrl: "na",
-    resumeHighlights: [
-      "na",
-    ],
+    name: "Peter Husch",
+    role: "Performance Engineer",
+    description: "Aerospace Engineering team.",
+    image: "/images/team/peter.png",
+    linkedin: "",
+    resumeUrl: "",
+    resumeHighlights: [],
   },
 ];
 
@@ -180,20 +182,19 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Join Section */}
+        {/* Questions Section */}
         <section>
           <div className="mx-auto max-w-6xl px-6 py-20">
             <div className="rounded-xl border border-border bg-card p-8 text-center md:p-12">
               <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-                Interested in Joining?
+                Have Questions?
               </h2>
               <p className="mx-auto mb-6 max-w-xl text-muted-foreground">
-                We are always looking for talented individuals to join our team.
-                If you are passionate about drones, robotics, or aerospace
-                engineering, we would love to hear from you.
+                Interested in our project? Reach out to our team if you have any
+                questions.
               </p>
               <a
-                href="mailto:team@projectfalcon.edu"
+                href="mailto:rojinosman1988@gmail.com"
                 className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Get in Touch

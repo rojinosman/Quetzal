@@ -53,18 +53,20 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
               </p>
 
               {/* LinkedIn Link */}
-              <div className="mt-4 flex items-center gap-2 pt-4 border-t border-border">
-                <Linkedin className="size-4 text-muted-foreground" />
-                <a
-                  href={`https://linkedin.com/in/${member.linkedin}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  @{member.linkedin}
-                </a>
-              </div>
+              {member.linkedin && (
+                <div className="mt-4 flex items-center gap-2 pt-4 border-t border-border">
+                  <Linkedin className="size-4 text-muted-foreground" />
+                  <a
+                    href={`https://linkedin.com/in/${member.linkedin}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    @{member.linkedin}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </HoverCardTrigger>
@@ -87,36 +89,51 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           </div>
 
           <div className="p-4">
-            <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Key Highlights
-            </p>
-            <ul className="space-y-2">
-              {member.resumeHighlights.map((highlight, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-2 text-sm text-foreground"
-                >
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                  {highlight}
-                </li>
-              ))}
-            </ul>
+            {(member.resumeHighlights.length > 0 || member.resumeUrl) && (
+              <>
+                {member.resumeHighlights.length > 0 && (
+                  <>
+                    <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Key Highlights
+                    </p>
+                    <ul className="space-y-2">
+                      {member.resumeHighlights.map((highlight, index) => (
+                        <li
+                          key={index}
+                          className="flex items-start gap-2 text-sm text-foreground"
+                        >
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
 
-            <Button
-              asChild
-              className="mt-4 w-full gap-2 bg-transparent"
-              variant="outline"
-              size="sm"
-            >
-              <a
-                href={member.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FileText className="size-4" />
-                View Full Resume
-              </a>
-            </Button>
+                {member.resumeUrl && (
+                  <Button
+                    asChild
+                    className="mt-4 w-full gap-2 bg-transparent"
+                    variant="outline"
+                    size="sm"
+                  >
+                    <a
+                      href={member.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FileText className="size-4" />
+                      View Full Resume
+                    </a>
+                  </Button>
+                )}
+                {member.resumeHighlights.length === 0 && !member.resumeUrl && (
+                  <p className="text-sm text-muted-foreground">
+                    No resume available yet.
+                  </p>
+                )}
+              </>
+            )}
           </div>
         </HoverCardContent>
       </HoverCard>

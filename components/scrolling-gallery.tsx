@@ -1,13 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-
-// Use vw units instead of % - useSpring + percentage transforms cause interpolation bugs
-// -500vw ensures we reach the last card on all breakpoints (mobile cards are 85vw)
-const GALLERY_X_START = "0vw";
-const GALLERY_X_END = "-500vw";
 
 const buildImages = [
   {
@@ -54,27 +48,16 @@ const buildImages = [
   },
 ];
 
-function GalleryImage({
+// Shared card content for both mobile and desktop
+function GalleryCardContent({
   image,
   index,
-  progress,
 }: {
   image: (typeof buildImages)[0];
   index: number;
-  progress: ReturnType<typeof useSpring>;
 }) {
-  const start = index / buildImages.length;
-  const end = (index + 1) / buildImages.length;
-
-  const opacity = useTransform(progress, [start, start + 0.1, end - 0.1, end], [0.3, 1, 1, 0.3]);
-  const scale = useTransform(progress, [start, start + 0.15, end - 0.15, end], [0.85, 1, 1, 0.85]);
-  const y = useTransform(progress, [start, start + 0.1, end - 0.1, end], [60, 0, 0, -60]);
-
   return (
-    <motion.div
-      style={{ opacity, scale, y }}
-      className="relative flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[50vw] h-[50vh] md:h-[60vh] rounded-2xl overflow-hidden group"
-    >
+    <>
       <Image
         src={image.src || "/placeholder.svg"}
         alt={image.alt}
@@ -93,82 +76,54 @@ function GalleryImage({
           {image.description}
         </p>
       </div>
-    </motion.div>
+    </>
   );
 }
 
 export function ScrollingGallery() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    // "center center" = progress 0 when gallery is centered, creating scroll buffer above
-    // so scrolling up to first card doesn't immediately exit the section
-    offset: ["center center", "end start"],
-  });
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Higher damping (50) reduces overshoot/jank; avoid low values that cause bounce
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 50,
-    restDelta: 0.001,
-  });
-
-  // Clamp progress so gallery stays on first/last card when outside 0–1
-  const clampedProgress = useTransform(smoothProgress, (v) =>
-    Math.max(0, Math.min(1, v))
-  );
-
-  // Use clamped progress for x so we don't overshoot when scrolling back to first card
-  const x = useTransform(
-    clampedProgress,
-    [0, 1],
-    [GALLERY_X_START, GALLERY_X_END]
-  );
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll <= 0) {
+      setScrollProgress(0);
+      return;
+    }
+    setScrollProgress(el.scrollLeft / maxScroll);
+  }, []);
 
   return (
-    <div ref={containerRef} className="relative h-[350vh]">
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        <div className="flex-1 flex items-center w-full overflow-hidden">
-          <motion.div
-            style={{ x, willChange: "transform" }}
-            className="flex gap-6 md:gap-10 pl-[5vw]"
+    <div className="flex flex-col items-center">
+      {/* Horizontal scroll gallery - scroll left/right to browse on all devices */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex w-full overflow-x-auto snap-x snap-mandatory gap-4 md:gap-10 px-[5vw] pb-8 scroll-smooth"
+      >
+        {buildImages.map((image, index) => (
+          <div
+            key={index}
+            className="relative flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[50vw] h-[55vh] md:h-[60vh] snap-center rounded-2xl overflow-hidden group"
           >
-            {buildImages.map((image, index) => (
-              <GalleryImage
-                key={index}
-                image={image}
-                index={index}
-                progress={clampedProgress}
-              />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Scrollbar under the pictures */}
-        <div className="w-full max-w-2xl mx-auto px-[5vw] pb-8 pt-4">
-          <div className="h-2 rounded-full bg-muted/80 overflow-hidden">
-            <motion.div
-              className="h-full w-full bg-primary rounded-full"
-              style={{ scaleX: clampedProgress, transformOrigin: "left" }}
-            />
+            <GalleryCardContent image={image} index={index} />
           </div>
-          <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-            <span>Phase 1</span>
-            <span>Phase {buildImages.length}</span>
-          </div>
-        </div>
+        ))}
       </div>
-      
-      {/* Progress indicator */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-card/80 backdrop-blur-md border border-border/50">
-          <span className="text-xs text-muted-foreground">Build Progress</span>
-          <div className="w-24 h-1 rounded-full bg-muted overflow-hidden">
-            <motion.div
-              className="h-full bg-primary rounded-full"
-              style={{ scaleX: clampedProgress, transformOrigin: "left" }}
-            />
-          </div>
+
+      {/* Scrollbar & labels */}
+      <div className="w-full max-w-2xl mx-auto px-[5vw] pb-8">
+        <div className="h-2 rounded-full bg-muted/80 overflow-hidden">
+          <div
+            className="h-full bg-primary rounded-full transition-all duration-150"
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
+        </div>
+        <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+          <span>Phase 1</span>
+          <span>Phase {buildImages.length}</span>
         </div>
       </div>
     </div>
