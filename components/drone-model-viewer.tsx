@@ -180,10 +180,20 @@ function ProceduralDrone() {
           <boxGeometry args={[0.06, 0.06, 0.04]} />
           <meshStandardMaterial color="#374151" metalness={0.5} roughness={0.3} />
         </mesh>
-        <mesh position={[0, 0, 0.03]}>
-          <cylinderGeometry args={[0.02, 0.02, 0.02, 16]} rotation={[Math.PI / 2, 0, 0]} />
-          <meshStandardMaterial color="#ef4444" metalness={0.8} roughness={0.2} emissive="#ef4444" emissiveIntensity={0.3} />
-        </mesh>
+        <mesh
+            position={[0, 0, 0.03]}
+            rotation={[Math.PI / 2, 0, 0]}
+          >
+            <cylinderGeometry args={[0.02, 0.02, 0.02, 16]} />
+            <meshStandardMaterial
+              color="#ef4444"
+              metalness={0.8}
+              roughness={0.2}
+              emissive="#ef4444"
+              emissiveIntensity={0.3}
+            />
+          </mesh>
+
       </group>
       
       {/* Arms and motors */}
