@@ -1,30 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
+import { Play, Pause, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function FirstFlightVideo() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {
+        setIsPlaying(false);
+      });
     }
   };
 
@@ -57,28 +50,39 @@ export function FirstFlightVideo() {
       <div className="relative aspect-video">
         <video
           ref={videoRef}
-          className="size-full object-cover"
+          className="size-full object-cover cursor-pointer"
           poster="/images/video-poster.png"
-          muted={isMuted}
+          muted
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onClick={togglePlay}
           playsInline
         >
-          <source src="/videos/first-flight.mov" type="video/mov" />
+          <source src="/videos/first-flight.mp4" type="video/mp4" />
+          <source src="/videos/first-flight.mov" type="video/quicktime" />
           Your browser does not support the video tag.
         </video>
 
         {!isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/40">
-            <Button
-              size="lg"
-              onClick={togglePlay}
-              className="size-20 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
-            >
+          <button
+            type="button"
+            onClick={togglePlay}
+            className="absolute inset-0 flex items-center justify-center bg-background/40 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+            aria-label="Play video"
+          >
+            <span className="flex size-20 items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
               <Play className="size-8 ml-1" />
-              <span className="sr-only">Play video</span>
-            </Button>
-          </div>
+            </span>
+          </button>
+        )}
+        {isPlaying && (
+          <div
+            onClick={togglePlay}
+            className="absolute inset-0 cursor-pointer"
+            aria-label="Pause video"
+          />
         )}
       </div>
 
@@ -106,16 +110,6 @@ export function FirstFlightVideo() {
             style={{ left: `calc(${progress}% - 6px)` }}
           />
         </div>
-
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleMute}
-          className="text-foreground hover:text-primary"
-        >
-          {isMuted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
-          <span className="sr-only">{isMuted ? "Unmute" : "Mute"}</span>
-        </Button>
 
         <Button
           variant="ghost"
