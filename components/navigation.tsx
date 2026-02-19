@@ -19,12 +19,9 @@ export function Navigation() {
           <img
             src="/Quetzal-logo.png"
             alt="Quetzal"
-            width={48}
-            height={48}
+            width={164}
+            height={164}
           />
-          <span className="text-lg font-semibold text-foreground">
-            Quetzal
-          </span>
         </Link>
 
         <div className="flex items-center gap-8">

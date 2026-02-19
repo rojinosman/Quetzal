@@ -6,11 +6,11 @@
 :root {
   --background: oklch(18.674% 0.00002 271.152 / 0.905);
   --foreground: oklch(0.95 0.01 250);
-  --card: oklch(52.496% 0.08176 152.462 / 0.607);
+  --card: oklch(39.673% 0.0383 152.943 / 0.613);
   --card-foreground: oklch(0.95 0.01 250);
   --popover: oklch(0.16 0.01 250);
   --popover-foreground: oklch(0.95 0.01 250);
-  --primary: oklch(84.028% 0.17238 84.078);
+  --primary: oklch(81.33% 0.16027 145.804);
   --primary-foreground: oklch(0.12 0.01 250);
   --secondary: oklch(0.22 0.01 250);
   --secondary-foreground: oklch(0.95 0.01 250);

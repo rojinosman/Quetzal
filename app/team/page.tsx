@@ -3,28 +3,29 @@ import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Sarah Chen",
-    role: "Project Lead & Systems Engineer",
+    name: "Rojin Osman",
+    role: "Electrical and Computer Engineering Team Lead",
     description:
-      "Leading the overall project direction and integrating all drone subsystems. Specializes in embedded systems and flight control software development.",
-    image: "/images/team/sarah-chen.jpg",
-    linkedin: "sarahchen-engineer",
-    resumeUrl: "/resumes/sarah-chen.pdf",
+      "Overseeing project management, systems integration, and overall design architecture.",
+    image: "/images/team/Rojin.jpg",
+    linkedin: "rojin-osman",
+    resumeUrl: "/resumes/rojin-osman.pdf",
     resumeHighlights: [
-      "BS in Electrical Engineering, Stanford",
-      "Previous internship at SpaceX - Avionics",
-      "Published research on autonomous flight systems",
-      "Fluent in C++, Python, MATLAB",
+      "BS in Computer Engineering, San Diego State University",
+      "Minored in Mathematics, San Diego State University",
+      "Fluent in C, Python, React, and Node.js",
+      "Experience with embedded systems",
+
     ],
   },
   {
-    name: "Marcus Johnson",
-    role: "Mechanical Engineer",
+    name: "Utku Solmaz",
+    role: "Mechanical Engineer Team Lead",
     description:
-      "Designed and manufactured the carbon fiber frame. Expert in CAD modeling, 3D printing, and materials engineering for aerospace applications.",
-    image: "/images/team/marcus-johnson.jpg",
-    linkedin: "marcusjohnson-mech",
-    resumeUrl: "/resumes/marcus-johnson.pdf",
+      "na",
+    image: "/images/team/Utku.png",
+    linkedin: "utku-solmaz",
+    resumeUrl: "/resumes/utku-resume.pdf",
     resumeHighlights: [
       "MS in Mechanical Engineering, MIT",
       "Certified SolidWorks Professional",
@@ -33,63 +34,111 @@ const teamMembers: TeamMember[] = [
     ],
   },
   {
-    name: "Priya Patel",
-    role: "Electronics Engineer",
+    name: "Riley McGregor",
+    role: "Avionics Engineer & Pilot",
     description:
-      "Responsible for all electrical systems including power distribution, sensor integration, and PCB design for the flight controller interface.",
-    image: "/images/team/priya-patel.jpg",
-    linkedin: "priyapatel-ee",
-    resumeUrl: "/resumes/priya-patel.pdf",
+      "na",
+    image: "/images/team/riley.png",
+    linkedin: "riley-conan-mcgregor",
+    resumeUrl: "/resumes/Riley-Resume.pdf",
     resumeHighlights: [
-      "BS in Electrical Engineering, Georgia Tech",
-      "PCB design using Altium Designer",
-      "Internship at Tesla - Power Electronics",
-      "Ham radio operator and RF enthusiast",
+      "na",
     ],
   },
   {
-    name: "James Wilson",
-    role: "Software Developer",
+    name: "Maxwell Weaver",
+    role: "Systems Integration Lead",
     description:
-      "Developing the ground control software and telemetry systems. Building real-time data visualization and autonomous flight path planning algorithms.",
-    image: "/images/team/james-wilson.jpg",
-    linkedin: "jameswilson-dev",
-    resumeUrl: "/resumes/james-wilson.pdf",
+      "na",
+    image: "/images/team/max.png",
+    linkedin: "maxwell-weaver",
+    resumeUrl: "/resumes/Maxwell-Weaver-Resume.pdf",
     resumeHighlights: [
-      "BS in Computer Science, UC Berkeley",
-      "Full-stack development experience",
-      "Contributed to open-source flight software",
-      "Expertise in React, Node.js, and ROS",
+      "na",
     ],
   },
   {
-    name: "Emily Rodriguez",
-    role: "Aerodynamics Specialist",
+    name: "Jack Slaten",
+    role: "Power Systems Engineer",
     description:
-      "Conducting CFD analysis and optimizing propeller configurations for maximum efficiency. Research focus on low Reynolds number aerodynamics.",
-    image: "/images/team/emily-rodriguez.jpg",
-    linkedin: "emilyrodriguez-aero",
-    resumeUrl: "/resumes/emily-rodriguez.pdf",
+      "na",
+    image: "/images/team/jack.png",
+    linkedin: "jack-slaten",
+    resumeUrl: "/resumes/jack.pdf",
     resumeHighlights: [
-      "MS in Aerospace Engineering, CalTech",
-      "Expert in ANSYS Fluent and OpenFOAM",
-      "Published in Journal of Fluid Mechanics",
-      "NASA research fellowship recipient",
+      "na",
     ],
   },
   {
-    name: "David Kim",
-    role: "Test Engineer",
+    name: "na",
+    role: "na",
     description:
-      "Managing all testing procedures including flight tests, hardware validation, and safety protocols. Ensures compliance with FAA regulations.",
-    image: "/images/team/david-kim.jpg",
-    linkedin: "davidkim-test",
-    resumeUrl: "/resumes/david-kim.pdf",
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
     resumeHighlights: [
-      "BS in Aerospace Engineering, Purdue",
-      "FAA Part 107 certified drone pilot",
-      "Experience in test automation systems",
-      "Quality assurance methodology expert",
+      "na",
+    ],
+  },
+    {
+    name: "na",
+    role: "na",
+    description:
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
+    resumeHighlights: [
+      "na",
+    ],
+  },
+    {
+    name: "na",
+    role: "na",
+    description:
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
+    resumeHighlights: [
+      "na",
+    ],
+  },
+    {
+    name: "na",
+    role: "na",
+    description:
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
+    resumeHighlights: [
+      "na",
+    ],
+  },
+    {
+    name: "na",
+    role: "na",
+    description:
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
+    resumeHighlights: [
+      "na",
+    ],
+  },
+    {
+    name: "na",
+    role: "na",
+    description:
+      "na",
+    image: "na",
+    linkedin: "na",
+    resumeUrl: "na",
+    resumeHighlights: [
+      "na",
     ],
   },
 ];

@@ -57,10 +57,10 @@ export default function Home() {
             {/* Tech Stats Cards */}
             <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { icon: Layers, label: "Carbon Fiber Frame", value: '5" Build' },
-                { icon: Cpu, label: "Flight Controller", value: "F7 Processor" },
-                { icon: Cog, label: "Motor Configuration", value: "4x 2300KV" },
-                { icon: Zap, label: "Power System", value: "4S LiPo" },
+                { icon: Layers, label: "Carbon Fiber Frame", value: '0.75"OD' },
+                { icon: Cpu, label: "Flight Controller", value: "Pixhawk" },
+                { icon: Cog, label: "Motor Configuration", value: "4x T-Motor U5 KV400" },
+                { icon: Zap, label: "Power System", value: "6S LiPo" },
               ].map((stat, index) => (
                 <div
                   key={index}
@@ -184,10 +184,10 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-6 py-16">
             <div className="grid gap-8 md:grid-cols-4">
               {[
-                { value: "6", label: "Team Members" },
-                { value: "4", label: "Months of Development" },
-                { value: "12", label: "Flight Tests" },
-                { value: "1", label: "Successful First Flight" },
+                { value: "14", label: "Team Members" },
+                { value: "6", label: "Months of Development" },
+                { value: "3", label: "Flight Tests" },
+                { value: "3", label: "Successful Flights" },
               ].map((stat, index) => (
                 <div
                   key={index}
@@ -239,16 +239,11 @@ export default function Home() {
               <img
                 src="/Quetzal-logo.png"
                 alt="Quetzal"
-                width={48}
-                height={48}
+                width={164}
+                height={164}
               />
-              <span className="text-lg font-semibold text-foreground">
-                Quetzal
-              </span>
+              
             </div>
-            <p className="text-sm text-muted-foreground">
-              A student engineering project
-            </p>
           </div>
         </div>
       </footer>

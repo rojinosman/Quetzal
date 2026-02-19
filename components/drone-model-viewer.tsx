@@ -1,18 +1,24 @@
 "use client";
 
-import { Suspense, useState, useRef, useEffect } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useState, useRef, useEffect, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import {
   OrbitControls,
   Html,
   Environment,
   ContactShadows,
   Float,
+  useGLTF,
 } from "@react-three/drei";
 import * as THREE from "three";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, RotateCcw, Move3D } from "lucide-react";
+
+const MODEL_URL = "/models/drone.glb";
+
+// Preload the default model (helps avoid a visible pop-in).
+useGLTF.preload(MODEL_URL);
 
 interface ComponentInfo {
   name: string;
@@ -37,8 +43,8 @@ const droneComponents: ComponentInfo[] = [
   {
     name: "Carbon Fiber Frame",
     description: "Lightweight yet extremely rigid frame. 5-inch arm span for agility and durability.",
-    position: [0, 0, 0],
-    color: "#64748b",
+    position: [0, 0.1, 0.1],
+    color: "#f30505ff",
   },
   {
     name: "ESC Array",
@@ -82,7 +88,7 @@ function ComponentMarker({
   return (
     <group position={component.position}>
       <mesh ref={markerRef} onClick={onClick}>
-        <sphereGeometry args={[0.06, 16, 16]} />
+        <sphereGeometry args={[0.02, 8, 8]} />
         <meshStandardMaterial
           color={component.color}
           emissive={component.color}
@@ -106,6 +112,35 @@ function ComponentMarker({
           </div>
         </Html>
       )}
+    </group>
+  );
+}
+
+// Loads a user-supplied CAD export (GLB/GLTF) from /public.
+// Drop your file in:  public/models/drone.glb  (or update MODEL_URL)
+function DroneCADModel({ url = MODEL_URL }: { url?: string }) {
+  const gltf = useGLTF(url) as unknown as { scene: THREE.Object3D };
+
+  // Clone so we can safely center/scale without mutating the cached GLTF scene.
+  const model = useMemo(() => gltf.scene.clone(true), [gltf.scene]);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    // Compute bounds, center, and a fit-to-view scale.
+    model.updateWorldMatrix(true, true);
+    const box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+
+    const maxDim = Math.max(size.x, size.y, size.z);
+    // The parent group is scaled to 2, so we fit the model into a ~1 unit box here.
+    if (Number.isFinite(maxDim) && maxDim > 0) setScale(1 / maxDim);
+  }, [model]);
+
+  return (
+    <group scale={scale}>
+      <primitive object={model} />
     </group>
   );
 }
@@ -223,7 +258,7 @@ function DroneModel({
   return (
     <Float speed={2} rotationIntensity={0.05} floatIntensity={0.2}>
       <group ref={groupRef} scale={2}>
-        <ProceduralDrone />
+        <DroneCADModel />
         
         {/* Component markers */}
         {droneComponents.map((component, index) => (
@@ -255,8 +290,8 @@ function CameraController({ activeComponent }: { activeComponent: number | null 
     <OrbitControls
       ref={controlsRef}
       enablePan={false}
-      minDistance={2}
-      maxDistance={8}
+      minDistance={0}
+      maxDistance={2}
       minPolarAngle={Math.PI / 6}
       maxPolarAngle={Math.PI / 2.2}
     />
