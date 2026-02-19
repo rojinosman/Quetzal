@@ -13,6 +13,8 @@ node_modules copy/
 out/
 .vercel/
 .next/cache/
+dev
+
 
 # =========================
 # Logs
