@@ -1,3 +1,5 @@
+export const dynamic = "force-static"
+
 import { Navigation } from "@/components/navigation";
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
 

@@ -1,3 +1,4 @@
+export const dynamic = "force-static"
 import { Navigation } from "@/components/navigation";
 import { ScrollingGallery } from "@/components/scrolling-gallery";
 import { FirstFlightVideo } from "@/components/first-flight-video";
