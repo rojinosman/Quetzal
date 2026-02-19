@@ -27,44 +27,53 @@ interface ComponentInfo {
   color: string;
 }
 
-const droneComponents: ComponentInfo[] = [
+// Position as fraction of bounding box: [0,0,0]=min, [1,1,1]=max. Applied after model is loaded.
+const droneComponentTemplates: Omit<ComponentInfo, "position">[] = [
   {
     name: "Flight Controller",
     description: "The brain of the drone. Processes sensor data and controls motor speeds for stable flight.",
-    position: [0, 0.15, 0],
     color: "#0891b2",
   },
   {
     name: "Brushless Motors",
     description: "High-efficiency motors providing thrust. 2300KV rating for optimal power-to-weight ratio.",
-    position: [0.7, 0.1, 0.7],
     color: "#14b8a6",
   },
   {
     name: "Carbon Fiber Frame",
     description: "Lightweight yet extremely rigid frame. 5-inch arm span for agility and durability.",
-    position: [0, 0.1, 0.1],
     color: "#f30505ff",
   },
   {
     name: "ESC Array",
     description: "Electronic Speed Controllers regulate power to each motor with 32-bit processing.",
-    position: [-0.5, 0.05, 0.5],
     color: "#8b5cf6",
   },
   {
     name: "LiPo Battery",
     description: "4S 1500mAh battery pack providing 14.8V nominal voltage for 6-8 minutes flight time.",
-    position: [0, -0.1, 0],
     color: "#f59e0b",
   },
   {
     name: "FPV Camera",
     description: "Low-latency camera with 150° wide angle lens for immersive first-person view flying.",
-    position: [0, 0.2, 0.4],
     color: "#ef4444",
   },
 ];
+
+// Bounding box fractions for each component (x, y, z: 0=min, 0.5=center, 1=max)
+const componentBoundsFractions: [number, number, number][] = [
+  [0.5, 0.9, 0.5],   // Flight Controller - top center
+  [0.85, 0.5, 0.85], // Brushless Motors - front-right corner (one motor)
+  [0.5, 0.5, 0.5],   // Carbon Fiber Frame - center
+  [0.7, 0.4, 0.7],   // ESC Array - along arm
+  [0.5, 0.1, 0.5],   // LiPo Battery - bottom center
+  [0.5, 0.6, 0.9],   // FPV Camera - front top
+];
+
+function lerp(min: number, max: number, t: number) {
+  return min + (max - min) * t;
+}
 
 function ComponentMarker({ 
   component, 
@@ -118,15 +127,24 @@ function ComponentMarker({
 
 // Loads a user-supplied CAD export (GLB/GLTF) from /public.
 // Drop your file in:  public/models/drone.glb  (or update MODEL_URL)
-function DroneCADModel({ url = MODEL_URL }: { url?: string }) {
+function DroneCADModel({
+  url = MODEL_URL,
+  activeComponent,
+  setActiveComponent,
+  onBoundsComputed,
+}: {
+  url?: string;
+  activeComponent: number | null;
+  setActiveComponent: (index: number | null) => void;
+  onBoundsComputed?: (data: { positions: [number, number, number][]; scale: number }) => void;
+}) {
   const gltf = useGLTF(url) as unknown as { scene: THREE.Object3D };
 
-  // Clone so we can safely center/scale without mutating the cached GLTF scene.
   const model = useMemo(() => gltf.scene.clone(true), [gltf.scene]);
   const [scale, setScale] = useState(1);
+  const [positions, setPositions] = useState<[number, number, number][] | null>(null);
 
   useEffect(() => {
-    // Compute bounds, center, and a fit-to-view scale.
     model.updateWorldMatrix(true, true);
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
@@ -134,13 +152,32 @@ function DroneCADModel({ url = MODEL_URL }: { url?: string }) {
     model.position.sub(center);
 
     const maxDim = Math.max(size.x, size.y, size.z);
-    // The parent group is scaled to 2, so we fit the model into a ~1 unit box here.
-    if (Number.isFinite(maxDim) && maxDim > 0) setScale(1 / maxDim);
-  }, [model]);
+    const modelScale = Number.isFinite(maxDim) && maxDim > 0 ? 1 / maxDim : 1;
+    setScale(modelScale);
+
+    const min = new THREE.Vector3(-size.x / 2, -size.y / 2, -size.z / 2);
+    const max = new THREE.Vector3(size.x / 2, size.y / 2, size.z / 2);
+    const computed: [number, number, number][] = componentBoundsFractions.map(([fx, fy, fz]) => [
+      lerp(min.x, max.x, fx),
+      lerp(min.y, max.y, fy),
+      lerp(min.z, max.z, fz),
+    ]);
+    setPositions(computed);
+    onBoundsComputed?.({ positions: computed, scale: modelScale });
+  }, [model, onBoundsComputed]);
 
   return (
     <group scale={scale}>
       <primitive object={model} />
+      {positions &&
+        droneComponentTemplates.map((template, index) => (
+          <ComponentMarker
+            key={template.name}
+            component={{ ...template, position: positions[index] ?? [0, 0, 0] }}
+            isActive={activeComponent === index}
+            onClick={() => setActiveComponent(activeComponent === index ? null : index)}
+          />
+        ))}
     </group>
   );
 }
@@ -250,51 +287,54 @@ function ProceduralDrone() {
   );
 }
 
-function DroneModel({ 
-  activeComponent, 
-  setActiveComponent 
-}: { 
+function DroneModel({
+  activeComponent,
+  setActiveComponent,
+  onBoundsComputed,
+}: {
   activeComponent: number | null;
   setActiveComponent: (index: number | null) => void;
+  onBoundsComputed?: (data: { positions: [number, number, number][]; scale: number }) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  
+
   useFrame((state) => {
     if (groupRef.current && activeComponent === null) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.15;
     }
   });
-  
+
   return (
     <Float speed={2} rotationIntensity={0.05} floatIntensity={0.2}>
       <group ref={groupRef} scale={2}>
-        <DroneCADModel />
-        
-        {/* Component markers */}
-        {droneComponents.map((component, index) => (
-          <ComponentMarker
-            key={component.name}
-            component={component}
-            isActive={activeComponent === index}
-            onClick={() => setActiveComponent(activeComponent === index ? null : index)}
-          />
-        ))}
+        <DroneCADModel
+          activeComponent={activeComponent}
+          setActiveComponent={setActiveComponent}
+          onBoundsComputed={onBoundsComputed}
+        />
       </group>
     </Float>
   );
 }
 
-function CameraController({ activeComponent }: { activeComponent: number | null }) {
+function CameraController({
+  activeComponent,
+  boundsData,
+}: {
+  activeComponent: number | null;
+  boundsData: { positions: [number, number, number][]; scale: number } | null;
+}) {
   const controlsRef = useRef<any>(null);
-  
+
   useEffect(() => {
-    if (activeComponent !== null && controlsRef.current) {
-      const target = droneComponents[activeComponent].position;
-      controlsRef.current.target.set(target[0] * 2, target[1] * 2, target[2] * 2);
+    if (activeComponent !== null && boundsData?.positions?.[activeComponent] && controlsRef.current) {
+      const pos = boundsData.positions[activeComponent];
+      const s = boundsData.scale * 2; // model scale * parent group scale
+      controlsRef.current.target.set(pos[0] * s, pos[1] * s, pos[2] * s);
     } else if (controlsRef.current) {
       controlsRef.current.target.set(0, 0, 0);
     }
-  }, [activeComponent]);
+  }, [activeComponent, boundsData]);
   
   return (
     <OrbitControls
@@ -321,12 +361,16 @@ function LoadingSpinner() {
 
 export function DroneModelViewer() {
   const [activeComponent, setActiveComponent] = useState<number | null>(null);
+  const [boundsData, setBoundsData] = useState<{
+    positions: [number, number, number][];
+    scale: number;
+  } | null>(null);
   
   const handlePrevComponent = () => {
     if (activeComponent === null) {
-      setActiveComponent(droneComponents.length - 1);
+      setActiveComponent(droneComponentTemplates.length - 1);
     } else {
-      setActiveComponent((activeComponent - 1 + droneComponents.length) % droneComponents.length);
+      setActiveComponent((activeComponent - 1 + droneComponentTemplates.length) % droneComponentTemplates.length);
     }
   };
   
@@ -334,7 +378,7 @@ export function DroneModelViewer() {
     if (activeComponent === null) {
       setActiveComponent(0);
     } else {
-      setActiveComponent((activeComponent + 1) % droneComponents.length);
+      setActiveComponent((activeComponent + 1) % droneComponentTemplates.length);
     }
   };
   
@@ -361,9 +405,10 @@ export function DroneModelViewer() {
           <pointLight position={[-10, -10, -10]} intensity={0.3} color="#0891b2" />
           <pointLight position={[5, 5, -5]} intensity={0.2} color="#14b8a6" />
           
-          <DroneModel 
-            activeComponent={activeComponent} 
-            setActiveComponent={setActiveComponent} 
+          <DroneModel
+            activeComponent={activeComponent}
+            setActiveComponent={setActiveComponent}
+            onBoundsComputed={setBoundsData}
           />
           
           <ContactShadows
@@ -375,7 +420,7 @@ export function DroneModelViewer() {
           />
           
           <Environment preset="city" />
-          <CameraController activeComponent={activeComponent} />
+          <CameraController activeComponent={activeComponent} boundsData={boundsData} />
         </Suspense>
       </Canvas>
       
@@ -429,7 +474,7 @@ export function DroneModelViewer() {
         
         {/* Component List */}
         <div className="flex items-center gap-2 overflow-x-auto max-w-[60%] pb-1">
-          {droneComponents.map((component, index) => (
+          {droneComponentTemplates.map((component, index) => (
             <button
               key={component.name}
               onClick={() => setActiveComponent(activeComponent === index ? null : index)}

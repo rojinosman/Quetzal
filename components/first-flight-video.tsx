@@ -4,6 +4,8 @@ import * as React from "react";
 import { Play, Pause, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const LOOP_END_SECONDS = 38;
+
 export function FirstFlightVideo() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
@@ -22,18 +24,19 @@ export function FirstFlightVideo() {
   };
 
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const progress =
-        (videoRef.current.currentTime / videoRef.current.duration) * 100;
-      setProgress(progress);
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (video.currentTime >= LOOP_END_SECONDS) {
+      video.currentTime = 0;
     }
+    setProgress((video.currentTime / LOOP_END_SECONDS) * 100);
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (videoRef.current) {
       const rect = e.currentTarget.getBoundingClientRect();
       const pos = (e.clientX - rect.left) / rect.width;
-      videoRef.current.currentTime = pos * videoRef.current.duration;
+      videoRef.current.currentTime = Math.min(pos * LOOP_END_SECONDS, LOOP_END_SECONDS);
     }
   };
 
@@ -54,7 +57,13 @@ export function FirstFlightVideo() {
           poster="/images/video-poster.png"
           muted
           onTimeUpdate={handleTimeUpdate}
-          onEnded={() => setIsPlaying(false)}
+          onEnded={() => {
+            // Loop: seek to start and continue (ended only fires if we didn't catch it in timeUpdate)
+            if (videoRef.current) {
+              videoRef.current.currentTime = 0;
+              videoRef.current.play();
+            }
+          }}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onClick={togglePlay}
