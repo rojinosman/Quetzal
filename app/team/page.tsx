@@ -29,10 +29,8 @@ const teamMembers: TeamMember[] = [
     linkedin: "utku-solmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
     resumeHighlights: [
-      "MS in Mechanical Engineering, MIT",
       "Certified SolidWorks Professional",
       "Experience in composite materials fabrication",
-      "Led university FSAE team to nationals",
     ],
   },
   {
