@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 const LOOP_END_SECONDS = 38;
 
 export function FirstFlightVideo() {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
@@ -40,16 +41,22 @@ export function FirstFlightVideo() {
     }
   };
 
-  const handleFullscreen = () => {
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
+  const handleFullscreen = async () => {
+    const el = containerRef.current;
+    if (!el) return;
+    try {
+      if (el.requestFullscreen) {
+        await el.requestFullscreen();
+      } else if ((el as HTMLDivElement & { webkitRequestFullscreen?: () => void }).webkitRequestFullscreen) {
+        (el as HTMLDivElement & { webkitRequestFullscreen: () => void }).webkitRequestFullscreen();
       }
+    } catch {
+      // Fullscreen may be blocked (e.g. not from user gesture)
     }
   };
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-border bg-card">
+    <div ref={containerRef} className="relative overflow-hidden rounded-xl border border-border bg-card">
       <div className="relative aspect-video">
         <video
           ref={videoRef}
