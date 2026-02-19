@@ -12,7 +12,6 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, RotateCcw, Move3D } from "lucide-react";
 
 const MODEL_URL = "/models/drone.glb";
@@ -31,49 +30,51 @@ interface ComponentInfo {
 const droneComponentTemplates: Omit<ComponentInfo, "position">[] = [
   {
     name: "Flight Controller",
-    description: "The brain of the drone. Processes sensor data and controls motor speeds for stable flight.",
+    description: "The brain of the drone. Processes sensor data and controls motor speeds for stable flight. Pixhawk unit.",
     color: "#0891b2",
   },
   {
     name: "Brushless Motors",
-    description: "High-efficiency motors providing thrust. 2300KV rating for optimal power-to-weight ratio.",
+    description: "4x T-Motor U5 KV400 motors providing thrust for optimal power-to-weight ratio.",
     color: "#14b8a6",
   },
   {
     name: "Carbon Fiber Frame",
-    description: "Lightweight yet extremely rigid frame. 5-inch arm span for agility and durability.",
+    description: "Lightweight yet extremely rigid frame. 0.75\" OD arms for agility and durability.",
     color: "#f30505ff",
   },
   {
-    name: "ESC Array",
-    description: "Electronic Speed Controllers regulate power to each motor with 32-bit processing.",
-    color: "#8b5cf6",
-  },
-  {
     name: "LiPo Battery",
-    description: "4S 1500mAh battery pack providing 14.8V nominal voltage for 6-8 minutes flight time.",
+    description: "6S LiPo battery pack providing 22.2V nominal voltage for extended flight time.",
     color: "#f59e0b",
   },
   {
     name: "FPV Camera",
-    description: "Low-latency camera with 150° wide angle lens for immersive first-person view flying.",
+    description: "Low-latency camera with wide angle lens for immersive first-person view flying.",
     color: "#ef4444",
+  },
+  {
+    name: "MH60 Airfoil",
+    description: "Fixed-wing structures extending from the body for added lift and stability in hybrid flight.",
+    color: "#94a3b8",
+  },
+  {
+    name: "Landing Gears",
+    description: "Triangular supports under the airfoils for stable ground contact and takeoff.",
+    color: "#22c55e",
   },
 ];
 
-// Bounding box fractions for each component (x, y, z: 0=min, 0.5=center, 1=max)
+// Position fractions: 0.5=center, 1=max. Based on drone model layout (fx, fy, fz).
 const componentBoundsFractions: [number, number, number][] = [
-  [0.5, 0.9, 0.5],   // Flight Controller - top center
-  [0.85, 0.5, 0.85], // Brushless Motors - front-right corner (one motor)
-  [0.5, 0.5, 0.5],   // Carbon Fiber Frame - center
-  [0.7, 0.4, 0.7],   // ESC Array - along arm
-  [0.5, 0.1, 0.5],   // LiPo Battery - bottom center
-  [0.5, 0.6, 0.9],   // FPV Camera - front top
+  [0.55, 0.18, 0.55],  // Flight Controller - underneath center, toward front
+  [0.88, 0.52, 0.88],  // Brushless Motors - front-right arm end (one motor)
+  [0.5, 0.42, 0.5],    // Carbon Fiber Frame - center of cross frame
+  [0.5, 0.12, 0.38],   // LiPo Battery - underneath, behind flight controller
+  [0.5, 0.68, 0.92],   // FPV Camera - front top (nose area)
+  [0.7, 0.35, 0.5],    // MH60 Airfoil - wing on right side
+  [0.75, 0.15, 0.5],   // Landing Gears - under airfoil
 ];
-
-function lerp(min: number, max: number, t: number) {
-  return min + (max - min) * t;
-}
 
 function ComponentMarker({ 
   component, 
@@ -84,43 +85,17 @@ function ComponentMarker({
   isActive: boolean; 
   onClick: () => void;
 }) {
-  const markerRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (markerRef.current) {
-      markerRef.current.scale.setScalar(
-        isActive ? 1.2 + Math.sin(state.clock.elapsedTime * 3) * 0.1 : 0.8
-      );
-    }
-  });
-  
   return (
     <group position={component.position}>
-      <mesh ref={markerRef} onClick={onClick}>
-        <sphereGeometry args={[0.02, 8, 8]} />
-        <meshStandardMaterial
-          color={component.color}
-          emissive={component.color}
-          emissiveIntensity={isActive ? 0.8 : 0.3}
-          transparent
-          opacity={isActive ? 1 : 0.7}
-        />
+      {/* Invisible clickable hit zone - no visible particles, tag appears on click */}
+      <mesh
+        onClick={(e) => { e.stopPropagation(); onClick(); }}
+        onPointerOver={() => { document.body.style.cursor = "pointer"; }}
+        onPointerOut={() => { document.body.style.cursor = "default"; }}
+      >
+        <sphereGeometry args={[0.05, 12, 12]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
-      {isActive && (
-        <Html distanceFactor={5} position={[0, 0.25, 0]}>
-          <div className="bg-card/95 backdrop-blur-md border border-border rounded-lg p-3 w-56 shadow-xl">
-            <Badge 
-              className="mb-2" 
-              style={{ backgroundColor: component.color, color: "#fff" }}
-            >
-              {component.name}
-            </Badge>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {component.description}
-            </p>
-          </div>
-        </Html>
-      )}
     </group>
   );
 }
@@ -155,16 +130,15 @@ function DroneCADModel({
     const modelScale = Number.isFinite(maxDim) && maxDim > 0 ? 1 / maxDim : 1;
     setScale(modelScale);
 
-    const min = new THREE.Vector3(-size.x / 2, -size.y / 2, -size.z / 2);
-    const max = new THREE.Vector3(size.x / 2, size.y / 2, size.z / 2);
+    // Each marker uses its own fraction - changing one only affects that marker
     const computed: [number, number, number][] = componentBoundsFractions.map(([fx, fy, fz]) => [
-      lerp(min.x, max.x, fx),
-      lerp(min.y, max.y, fy),
-      lerp(min.z, max.z, fz),
+      (fx - 0.5) * maxDim,
+      (fy - 0.5) * maxDim,
+      (fz - 0.5) * maxDim,
     ]);
     setPositions(computed);
     onBoundsComputed?.({ positions: computed, scale: modelScale });
-  }, [model, onBoundsComputed]);
+  }, [model, onBoundsComputed, componentBoundsFractions]);
 
   return (
     <group scale={scale}>
@@ -194,19 +168,19 @@ function ProceduralDrone() {
   return (
     <group>
       {/* Central body */}
-      <mesh position={[0, 0.05, 0]}>
+      <mesh position={[0.1, 0.0, 0]}>
         <boxGeometry args={[0.3, 0.08, 0.3]} />
         <meshStandardMaterial color="#1e293b" metalness={0.8} roughness={0.2} />
       </mesh>
       
       {/* Flight controller on top */}
-      <mesh position={[0, 0.12, 0]}>
+      <mesh position={[0.0, 0.0, 0]}>
         <boxGeometry args={[0.15, 0.03, 0.15]} />
         <meshStandardMaterial color="#0891b2" metalness={0.6} roughness={0.3} emissive="#0891b2" emissiveIntensity={0.2} />
       </mesh>
       
       {/* Battery underneath */}
-      <mesh position={[0, -0.05, 0]}>
+      <mesh position={[0.0, 0.09, 0.0]}>
         <boxGeometry args={[0.2, 0.06, 0.08]} />
         <meshStandardMaterial color="#f59e0b" metalness={0.3} roughness={0.5} />
       </mesh>
@@ -287,6 +261,12 @@ function ProceduralDrone() {
   );
 }
 
+// Set to false to re-enable drone rotation and float animation
+const DRONE_STATIC_MODE = true;
+
+// Set to false to hide axis helper when done placing markers
+const AXES_VISIBLE = false;
+
 function DroneModel({
   activeComponent,
   setActiveComponent,
@@ -299,14 +279,22 @@ function DroneModel({
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
-    if (groupRef.current && activeComponent === null) {
+    if (!DRONE_STATIC_MODE && groupRef.current && activeComponent === null) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.15;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={0.05} floatIntensity={0.2}>
+    <Float speed={DRONE_STATIC_MODE ? 0 : 2} rotationIntensity={DRONE_STATIC_MODE ? 0 : 0.05} floatIntensity={DRONE_STATIC_MODE ? 0 : 0.2}>
       <group ref={groupRef} scale={2}>
+        {AXES_VISIBLE && (
+          <group position={[0, 0, 0]}>
+            <axesHelper args={[0.4]} />
+            <Html position={[0.45, 0, 0]} style={{ color: "#ef4444", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+X</Html>
+            <Html position={[0, 0.45, 0]} style={{ color: "#22c55e", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Y</Html>
+            <Html position={[0, 0, 0.45]} style={{ color: "#3b82f6", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Z</Html>
+          </group>
+        )}
         <DroneCADModel
           activeComponent={activeComponent}
           setActiveComponent={setActiveComponent}
@@ -317,31 +305,12 @@ function DroneModel({
   );
 }
 
-function CameraController({
-  activeComponent,
-  boundsData,
-}: {
-  activeComponent: number | null;
-  boundsData: { positions: [number, number, number][]; scale: number } | null;
-}) {
-  const controlsRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (activeComponent !== null && boundsData?.positions?.[activeComponent] && controlsRef.current) {
-      const pos = boundsData.positions[activeComponent];
-      const s = boundsData.scale * 2; // model scale * parent group scale
-      controlsRef.current.target.set(pos[0] * s, pos[1] * s, pos[2] * s);
-    } else if (controlsRef.current) {
-      controlsRef.current.target.set(0, 0, 0);
-    }
-  }, [activeComponent, boundsData]);
-  
+function CameraController() {
   return (
     <OrbitControls
-      ref={controlsRef}
       enablePan={false}
-      minDistance={0}
-      maxDistance={2}
+      minDistance={0.5}
+      maxDistance={4}
       minPolarAngle={Math.PI / 6}
       maxPolarAngle={Math.PI / 2.2}
     />
@@ -387,9 +356,11 @@ export function DroneModelViewer() {
   };
   
   return (
-    <div className="relative w-full h-[600px] rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
+    <div className="flex w-full h-[600px] max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
+      {/* Drone canvas */}
+      <div className="relative flex-1 min-w-0">
       <Canvas
-        camera={{ position: [3, 2, 4], fov: 45 }}
+        camera={{ position: [1.8, 1.2, 2.5], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
@@ -420,7 +391,7 @@ export function DroneModelViewer() {
           />
           
           <Environment preset="city" />
-          <CameraController activeComponent={activeComponent} boundsData={boundsData} />
+          <CameraController />
         </Suspense>
       </Canvas>
       
@@ -431,7 +402,7 @@ export function DroneModelViewer() {
             Interactive 3D Model
           </h3>
           <p className="text-sm text-muted-foreground">
-            Click markers or use controls to explore components
+            Select a component or drag to rotate
           </p>
         </div>
         
@@ -443,48 +414,46 @@ export function DroneModelViewer() {
         </div>
       </div>
       
-      {/* Component Navigation */}
-      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handlePrevComponent}
-            className="bg-background/80 backdrop-blur-sm"
-          >
-            <ChevronLeft className="size-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleNextComponent}
-            className="bg-background/80 backdrop-blur-sm"
-          >
-            <ChevronRight className="size-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleReset}
-            className="bg-background/80 backdrop-blur-sm"
-          >
-            <RotateCcw className="size-4" />
-          </Button>
-        </div>
-        
-        {/* Component List */}
-        <div className="flex items-center gap-2 overflow-x-auto max-w-[60%] pb-1">
+      {/* Controls */}
+      <div className="absolute bottom-4 left-4 flex items-center gap-2 pointer-events-auto">
+        <Button variant="outline" size="icon" onClick={handlePrevComponent} className="bg-background/80 backdrop-blur-sm">
+          <ChevronLeft className="size-4" />
+        </Button>
+        <Button variant="outline" size="icon" onClick={handleNextComponent} className="bg-background/80 backdrop-blur-sm">
+          <ChevronRight className="size-4" />
+        </Button>
+        <Button variant="outline" size="icon" onClick={handleReset} className="bg-background/80 backdrop-blur-sm">
+          <RotateCcw className="size-4" />
+        </Button>
+      </div>
+      </div>
+
+      {/* Scrollable component panel */}
+      <div className="w-64 border-l border-border bg-background/50 flex flex-col shrink-0">
+        <h3 className="px-4 py-3 text-sm font-semibold text-foreground border-b border-border">
+          Components
+        </h3>
+        <div className="flex-1 overflow-y-auto p-2">
           {droneComponentTemplates.map((component, index) => (
             <button
               key={component.name}
               onClick={() => setActiveComponent(activeComponent === index ? null : index)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all whitespace-nowrap ${
+              className={`w-full text-left px-3 py-3 rounded-lg mb-1 transition-colors ${
                 activeComponent === index
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground border border-border"
+                  ? "bg-primary/15 border border-primary/50"
+                  : "hover:bg-muted/50 border border-transparent"
               }`}
             >
-              {component.name}
+              <div
+                className="w-2 h-2 rounded-full shrink-0 inline-block mr-2 align-middle"
+                style={{ backgroundColor: component.color }}
+              />
+              <span className="text-sm font-medium">{component.name}</span>
+              {activeComponent === index && (
+                <p className="text-xs text-muted-foreground mt-1.5 ml-4 leading-snug">
+                  {component.description}
+                </p>
+              )}
             </button>
           ))}
         </div>
