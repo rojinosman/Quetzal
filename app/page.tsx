@@ -187,8 +187,8 @@ export default function Home() {
               {[
                 { value: "14", label: "Team Members" },
                 { value: "6", label: "Months of Development" },
-                { value: "9", label: "Flight Tests" },
-                { value: "8", label: "Successful Flights" },
+                { value: "8", label: "Flight Tests" },
+                { value: "6", label: "Successful Flights" },
               ].map((stat, index) => (
                 <div
                   key={index}

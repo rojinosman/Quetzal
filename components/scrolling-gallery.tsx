@@ -5,43 +5,43 @@ import Image from "next/image";
 
 const buildImages = [
   {
-    src: "/images/foam-wing.png",
+    src: "/images/foam-wing.jpg",
     alt: "Cut out foam wing",
     title: "Wing Fabrication",
     description: "Constructing the foam wings",
   },
   {
-    src: "/images/servos.png",
+    src: "/images/servos.jpg",
     alt: "Servo cuttouts in foam wing",
     title: "Servo Mock Cutouts",
     description: "Creating precise cutouts for servo installation",
   },
   {
-    src: "/images/Aleron-cuts.png",
+    src: "/images/Aleron-cuts.jpg",
     alt: "Aleron cuts in foam wing",
     title: "Aileron Cuts",
     description: "Creating precise cutouts for aileron movement",
   },
   {
-    src: "/images/tubing.png",
+    src: "/images/tubing.jpg",
     alt: "Assembling T-joints to the carbon fiber tubing",
     title: "Spar Connections with T-Joints",
     description: "Connecting carbon fiber tubing spars using T-joints",
   },
   {
-    src: "/images/resining-tube-to-wing.png",
+    src: "/images/resining-tube-to-wing.jpg",
     alt: "Resining the carbon fiber tubing to the foam wing",
     title: "Resining the Spars to the Wings",
     description: "Applying resin to secure the spars to the foam wings",
   },
     {
-    src: "/images/resined-wings.png",
+    src: "/images/resined-wings.jpg",
     alt: "fiberglass resined wings",
     title: "Fiberglass Resining the Wings",
     description: "Applying fiberglass and resin over the foam wings for strength",
   },
   {
-    src: "/images/iteration-1-with-cone.png",
+    src: "/images/iteration-1-with-cone.jpg",
     alt: "Completed wings with carbon fiber tubes and fuselage cone",
     title: "Final Assembly of Iteration 1",
     description: "Final assembly of wings, fuselage, and components for first iteration without the electronics",

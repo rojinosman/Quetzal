@@ -54,7 +54,7 @@ export function FirstFlightVideo() {
         <video
           ref={videoRef}
           className="size-full object-cover cursor-pointer"
-          poster="/images/video-poster.png"
+          poster="/images/video-poster.jpg"
           muted
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => {
