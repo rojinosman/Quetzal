@@ -12,7 +12,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, RotateCcw, Move3D } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw, Move3D, PanelRightOpen, PanelLeftClose } from "lucide-react";
 
 const MODEL_URL = "/models/drone.glb";
 
@@ -354,6 +354,8 @@ export function DroneModelViewer() {
   const handleReset = () => {
     setActiveComponent(null);
   };
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
   
   return (
     <div className="flex w-full h-[600px] max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
@@ -426,13 +428,39 @@ export function DroneModelViewer() {
           <RotateCcw className="size-4" />
         </Button>
       </div>
+
+      {/* Mobile toggle - show on small screens when panel is closed */}
+      {!isPanelOpen && (
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={() => setIsPanelOpen(true)}
+        className="absolute right-4 bottom-4 z-10 md:hidden bg-background/90 backdrop-blur-sm"
+        aria-label="Open components"
+      >
+        <PanelRightOpen className="size-5" />
+      </Button>
+      )}
       </div>
 
-      {/* Scrollable component panel */}
-      <div className="w-64 border-l border-border bg-background/50 flex flex-col shrink-0">
-        <h3 className="px-4 py-3 text-sm font-semibold text-foreground border-b border-border">
-          Components
-        </h3>
+      {/* Scrollable component panel - collapsible on mobile */}
+      <div
+        className={`absolute md:relative right-0 top-0 bottom-0 w-64 border-l border-border bg-background/95 backdrop-blur-sm flex flex-col shrink-0 z-20 transition-transform duration-200 ease-out ${
+          isPanelOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+          <h3 className="text-sm font-semibold text-foreground">Components</h3>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsPanelOpen(false)}
+            className="md:hidden size-8"
+            aria-label="Close components"
+          >
+            <PanelLeftClose className="size-5" />
+          </Button>
+        </div>
         <div className="flex-1 overflow-y-auto p-2">
           {droneComponentTemplates.map((component, index) => (
             <button

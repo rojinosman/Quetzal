@@ -148,13 +148,7 @@ export default function Home() {
             </div>
 
             <DroneModelViewer />
-
-            <div className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                Upload your drone CAD model (GLB/GLTF format) to replace the
-                placeholder
-              </p>
-            </div>
+           
           </div>
         </section>
 
