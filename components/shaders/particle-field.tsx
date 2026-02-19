@@ -108,23 +108,18 @@ function Particles({ count = 2000 }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
         <bufferAttribute
           attach="attributes-aScale"
-          count={count}
-          array={scales}
-          itemSize={1}
+          args={[scales, 1]}
         />
         <bufferAttribute
           attach="attributes-aRandomness"
-          count={count}
-          array={randomness}
-          itemSize={3}
+          args={[randomness, 3]}
         />
       </bufferGeometry>
+
       <shaderMaterial
         vertexShader={particleVertexShader}
         fragmentShader={particleFragmentShader}
@@ -134,6 +129,7 @@ function Particles({ count = 2000 }) {
         blending={THREE.AdditiveBlending}
       />
     </points>
+
   );
 }
 
