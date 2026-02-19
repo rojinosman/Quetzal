@@ -187,8 +187,8 @@ export default function Home() {
               {[
                 { value: "14", label: "Team Members" },
                 { value: "6", label: "Months of Development" },
-                { value: "3", label: "Flight Tests" },
-                { value: "3", label: "Successful Flights" },
+                { value: "9", label: "Flight Tests" },
+                { value: "8", label: "Successful Flights" },
               ].map((stat, index) => (
                 <div
                   key={index}
@@ -234,17 +234,20 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border/50 bg-card/30 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-6 py-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="flex items-center gap-2">
-              <img
-                src="/Quetzal-logo.png"
-                alt="Quetzal"
-                width={164}
-                height={164}
-              />
-              
-            </div>
+        <div className="mx-auto max-w-6xl px-6 py-4">
+          <div className="flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
+            <img
+              src="/Quetzal-logo.png"
+              alt="Quetzal"
+              width={164}
+              height={164}
+            />
+            <a
+                href="mailto:rojinosman1988@gmail.com"
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Connect with the team
+              </a>
           </div>
         </div>
       </footer>

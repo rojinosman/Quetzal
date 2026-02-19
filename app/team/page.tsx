@@ -205,30 +205,21 @@ export default function TeamPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-6xl px-6 py-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="flex items-center gap-2">
-              <div className="flex size-6 items-center justify-center rounded bg-primary">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="size-4 text-primary-foreground"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <span className="text-sm font-medium text-foreground">
-                Quetzal
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              A student engineering project
-            </p>
+      <footer className="border-t border-border/50 bg-card/30 backdrop-blur-md">
+        <div className="mx-auto max-w-6xl px-6 py-4">
+          <div className="flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
+            <img
+              src="/Quetzal-logo.png"
+              alt="Quetzal"
+              width={164}
+              height={164}
+            />
+            <a
+                href="mailto:rojinosman1988@gmail.com"
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Connect with the team
+              </a>
           </div>
         </div>
       </footer>
