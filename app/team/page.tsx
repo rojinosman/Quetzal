@@ -3,60 +3,7 @@ export const dynamic = "force-static"
 import { Navigation } from "@/components/navigation";
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
 
-const teamMembers: TeamMember[] = [
-  // Electrical and Computer Engineering Team
-  {
-    name: "Rojin Osman",
-    role: "ECE Lead",
-    description:
-      "Electrical and Computer Engineering team. Overseeing project management, systems integration, and overall design architecture.",
-    image: "/images/team/Rojin.JPG",
-    linkedin: "rojin-osman",
-    resumeUrl: "/resumes/rojin-osman.pdf",
-    resumeHighlights: [
-      "BS in Computer Engineering, San Diego State University",
-      "Minored in Mathematics, San Diego State University",
-      "Fluent in C, Python, React, and Node.js",
-      "Experience with embedded systems",
-    ],
-  },
-  {
-    name: "Riley McGregor",
-    role: "Avionics Integration Engineer",
-    description: "Electrical and Computer Engineering team. Avionics systems integration and flight operations.",
-    image: "/images/team/riley.jpg",
-    linkedin: "riley-conan-mcgregor",
-    resumeUrl: "/resumes/Riley-Resume.pdf",
-    resumeHighlights: [],
-  },
-  {
-    name: "Ismael Villavicencio",
-    role: "Electrical Integration Engineer",
-    description: "Electrical and Computer Engineering team.",
-    image: "/images/team/ismael.jpg",
-    linkedin: "ismael-villavicencio-111090347",
-    resumeUrl: "",
-    resumeHighlights: [],
-  },
-  {
-    name: "Burak Ozhan",
-    role: "Control Systems Engineer",
-    description: "Electrical and Computer Engineering team.",
-    image: "/images/team/burak.jpg",
-    linkedin: "burak-ozhan",
-    resumeUrl: "",
-    resumeHighlights: [],
-  },
-  {
-    name: "Jack Slaten",
-    role: "Power Systems Engineer",
-    description: "Electrical and Computer Engineering team.",
-    image: "/images/team/jack.jpg",
-    linkedin: "jack-slaten",
-    resumeUrl: "/resumes/jack.pdf",
-    resumeHighlights: [],
-  },
-  // Mechanical Engineering Team
+const meTeam: TeamMember[] = [
   {
     name: "Utku Solmaz",
     role: "ME Lead",
@@ -80,15 +27,6 @@ const teamMembers: TeamMember[] = [
     resumeHighlights: [],
   },
   {
-    name: "Gavin Rask",
-    role: "Structures Engineer",
-    description: "Mechanical Engineering team.",
-    image: "/images/team/gavin.jpg",
-    linkedin: "gavin-rask-99213a386",
-    resumeUrl: "",
-    resumeHighlights: [],
-  },
-  {
     name: "Christian Mandigma",
     role: "Mechanical Design Engineer",
     description: "Mechanical Engineering team.",
@@ -106,7 +44,18 @@ const teamMembers: TeamMember[] = [
     resumeUrl: "",
     resumeHighlights: [],
   },
-  // Aerospace Engineering Team
+  {
+    name: "Gavin Rask",
+    role: "Structures Engineer",
+    description: "Mechanical Engineering team.",
+    image: "/images/team/gavin.jpg",
+    linkedin: "gavin-rask-99213a386",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+];
+
+const aeTeam: TeamMember[] = [
   {
     name: "Christian Rosete",
     role: "AE Lead",
@@ -145,6 +94,60 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
+const eceTeam: TeamMember[] = [
+  {
+    name: "Rojin Osman",
+    role: "ECE Lead",
+    description:
+      "Electrical and Computer Engineering team. Overseeing project management, systems integration, and overall design architecture.",
+    image: "/images/team/Rojin.JPG",
+    linkedin: "rojin-osman",
+    resumeUrl: "/resumes/rojin-osman.pdf",
+    resumeHighlights: [
+      "BS in Computer Engineering, San Diego State University",
+      "Minored in Mathematics, San Diego State University",
+      "Fluent in C, Python, React, and Node.js",
+      "Experience with embedded systems",
+    ],
+  },
+  {
+    name: "Riley McGregor",
+    role: "Avionics Integration Engineer",
+    description: "Electrical and Computer Engineering team. Avionics systems integration and flight operations.",
+    image: "/images/team/riley.jpg",
+    linkedin: "riley-conan-mcgregor",
+    resumeUrl: "/resumes/Riley-Resume.pdf",
+    resumeHighlights: [],
+  },
+  {
+    name: "Ismael Villavicencio",
+    role: "Electrical Integration Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/ismael.jpg",
+    linkedin: "ismael-villavicencio-111090347",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+  {
+    name: "Jack Slaten",
+    role: "Power Systems Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/jack.jpg",
+    linkedin: "jack-slaten",
+    resumeUrl: "/resumes/jack.pdf",
+    resumeHighlights: [],
+  },
+  {
+    name: "Burak Ozhan",
+    role: "Control Systems Engineer",
+    description: "Electrical and Computer Engineering team.",
+    image: "/images/team/burak.jpg",
+    linkedin: "burak-ozhan",
+    resumeUrl: "",
+    resumeHighlights: [],
+  },
+];
+
 export default function TeamPage() {
   return (
     <div className="min-h-screen bg-background">
@@ -171,13 +174,31 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Team Grid */}
+        {/* Team Grid - 3 columns: ME (left), AE (middle), ECE (right) */}
         <section className="border-b border-border">
           <div className="mx-auto max-w-6xl px-6 py-16">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {teamMembers.map((member) => (
-                <TeamMemberCard key={member.name} member={member} />
-              ))}
+            <div className="grid gap-8 lg:grid-cols-3">
+              {/* ME - Left column */}
+              <div className="flex flex-col gap-6">
+                <h2 className="text-lg font-semibold text-foreground">Mechanical Engineering</h2>
+                {meTeam.map((member) => (
+                  <TeamMemberCard key={member.name} member={member} />
+                ))}
+              </div>
+              {/* AE - Middle column */}
+              <div className="flex flex-col gap-6">
+                <h2 className="text-lg font-semibold text-foreground">Aerospace Engineering</h2>
+                {aeTeam.map((member) => (
+                  <TeamMemberCard key={member.name} member={member} />
+                ))}
+              </div>
+              {/* ECE - Right column */}
+              <div className="flex flex-col gap-6">
+                <h2 className="text-lg font-semibold text-foreground">Electrical & Computer Engineering</h2>
+                {eceTeam.map((member) => (
+                  <TeamMemberCard key={member.name} member={member} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
