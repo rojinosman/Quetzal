@@ -57,7 +57,7 @@ const meTeam: TeamMember[] = [
 
 const aeTeam: TeamMember[] = [
   {
-    name: "Christian Rosete",
+    name: "Cristian Rosete",
     role: "AE Lead",
     description: "Aerospace Engineering team.",
     image: "/images/team/cristian.jpg",
