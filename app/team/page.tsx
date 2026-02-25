@@ -80,21 +80,21 @@ const meTeam: TeamMember[] = [
 
 const aeTeam: TeamMember[] = [
   {
-    name: "Cristian Rosete",
-    role: "AE Lead",
-    description: "Aerospace Engineering team.",
-    image: "/images/team/cristian.jpg",
-    linkedin: "cristian-j-rosete",
-    resumeUrl: "",
-    resumeHighlights: [],
-  },
-  {
     name: "Maxwell Weaver",
-    role: "Mechanical Integration Engineer",
+    role: "AE Lead",
     description: "Aerospace Engineering team.",
     image: "/images/team/max.jpg",
     linkedin: "maxwell-weaver",
     resumeUrl: "/resumes/Maxwell-Weaver-Resume.pdf",
+    resumeHighlights: [],
+  },
+  {
+    name: "Cristian Rosete",
+    role: "Mechanical Integration Engineer",
+    description: "Aerospace Engineering team.",
+    image: "/images/team/cristian.jpg",
+    linkedin: "cristian-j-rosete",
+    resumeUrl: "",
     resumeHighlights: [],
   },
   {
