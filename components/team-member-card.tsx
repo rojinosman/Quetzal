@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Linkedin, FileText } from "lucide-react";
+import { Linkedin, FileText, Briefcase } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
@@ -16,6 +16,7 @@ export interface TeamMember {
   image: string;
   linkedin: string;
   resumeUrl: string;
+  portfolioUrl?: string;
   resumeHighlights: string[];
 }
 
@@ -52,19 +53,37 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                 {member.description}
               </p>
 
-              {/* LinkedIn Link */}
-              {member.linkedin && (
-                <div className="mt-4 flex items-center gap-2 pt-4 border-t border-border">
-                  <Linkedin className="size-4 text-muted-foreground" />
-                  <a
-                    href={`https://linkedin.com/in/${member.linkedin}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    @{member.linkedin}
-                  </a>
+              {/* LinkedIn & Portfolio Links */}
+              {(member.linkedin || member.portfolioUrl) && (
+                <div className="mt-4 space-y-2 pt-4 border-t border-border">
+                  {member.linkedin && (
+                    <div className="flex items-center gap-2">
+                      <Linkedin className="size-4 shrink-0 text-muted-foreground" />
+                      <a
+                        href={`https://linkedin.com/in/${member.linkedin}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        @{member.linkedin}
+                      </a>
+                    </div>
+                  )}
+                  {member.portfolioUrl?.trim() && (
+                    <div className="flex items-center gap-2">
+                      <Briefcase className="size-4 shrink-0 text-muted-foreground" />
+                      <a
+                        href={member.portfolioUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        View portfolio
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -124,6 +143,23 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                     >
                       <FileText className="size-4" />
                       View Full Resume
+                    </a>
+                  </Button>
+                )}
+                {member.portfolioUrl && (
+                  <Button
+                    asChild
+                    className="mt-4 w-full gap-2 bg-transparent"
+                    variant="outline"
+                    size="sm"
+                  >
+                    <a
+                      href={member.portfolioUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FileText className="size-4" />
+                      View Portfolio
                     </a>
                   </Button>
                 )}

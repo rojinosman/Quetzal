@@ -30,6 +30,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/utku.jpg",
     linkedin: "utku-solmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
+    portfolioUrl: "",
     resumeHighlights: [
       "Certified SolidWorks Professional",
       "Experience in composite materials fabrication",
@@ -42,6 +43,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/laith1.jpg",
     linkedin: "laith-abouhasoun-482132227",
     resumeUrl: "/resumes/Laith-Resume.pdf",
+    portfolioUrl: "",
     resumeHighlights: [
       "B.S. in Mechanical Engineering – San Diego State University",
       "Mechanical Systems Design & Structural Development",
@@ -56,6 +58,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/ChristianM.jpg",
     linkedin: "christian-mandigma-3b0477182",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -65,6 +68,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/jonah.jpg",
     linkedin: "jonaholsen",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -74,6 +78,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/gavin.jpg",
     linkedin: "gavin-rask-99213a386",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
 ];
@@ -86,6 +91,7 @@ const aeTeam: TeamMember[] = [
     image: "/images/team/max.jpg",
     linkedin: "maxwell-weaver",
     resumeUrl: "/resumes/Maxwell-Weaver-Resume.pdf",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -95,6 +101,7 @@ const aeTeam: TeamMember[] = [
     image: "/images/team/cristian.jpg",
     linkedin: "cristian-j-rosete",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -104,6 +111,7 @@ const aeTeam: TeamMember[] = [
     image: "/images/team/kyle.jpg",
     linkedin: "",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -113,6 +121,7 @@ const aeTeam: TeamMember[] = [
     image: "/images/team/peter.jpg",
     linkedin: "peter-husch-2ab325235",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
 ];
@@ -126,6 +135,7 @@ const eceTeam: TeamMember[] = [
     image: "/images/team/Rojin.JPG",
     linkedin: "rojin-osman",
     resumeUrl: "/resumes/Rojin-Resume.pdf",
+    portfolioUrl: "https://sites.google.com/view/rojinosmanportfolio/home",
     resumeHighlights: [
       "BS in Computer Engineering, San Diego State University",
       "Minored in Mathematics, San Diego State University",
@@ -140,6 +150,7 @@ const eceTeam: TeamMember[] = [
     image: "/images/team/riley.jpg",
     linkedin: "riley-conan-mcgregor",
     resumeUrl: "/resumes/Riley-Resume.pdf",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -149,6 +160,7 @@ const eceTeam: TeamMember[] = [
     image: "/images/team/ismael.jpg",
     linkedin: "ismael-villavicencio-111090347",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -158,6 +170,7 @@ const eceTeam: TeamMember[] = [
     image: "/images/team/jack.jpg",
     linkedin: "jack-slaten",
     resumeUrl: "/resumes/jack.pdf",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
   {
@@ -167,6 +180,7 @@ const eceTeam: TeamMember[] = [
     image: "/images/team/burak.jpg",
     linkedin: "burak-ozhan",
     resumeUrl: "",
+    portfolioUrl: "",
     resumeHighlights: [],
   },
 ];
