@@ -125,7 +125,7 @@ const eceTeam: TeamMember[] = [
       "Electrical and Computer Engineering team. Overseeing project management, systems integration, and overall design architecture.",
     image: "/images/team/Rojin.JPG",
     linkedin: "rojin-osman",
-    resumeUrl: "/resumes/rojin-osman.pdf",
+    resumeUrl: "/resumes/Rojin-Resume.pdf",
     resumeHighlights: [
       "BS in Computer Engineering, San Diego State University",
       "Minored in Mathematics, San Diego State University",
