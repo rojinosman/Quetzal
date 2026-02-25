@@ -39,7 +39,7 @@ const meTeam: TeamMember[] = [
     name: "Laith Abouhasoun",
     role: "Design & Manufacturing Engineer | Budget Manager | Safety Pilot",
     description: " Designed and iterated mechanical subsystems (iris gripper, motor mounts, structural connectors, landing gear) and supported hands-on fabrication, 3D printing, assembly, and testing across the full VTOL build.",
-    image: "/images/team/laith.jpg",
+    image: "/images/team/laith1.jpg",
     linkedin: "laith-abouhasoun-482132227",
     resumeUrl: "/resumes/Laith-Resume.pdf",
     resumeHighlights: [
