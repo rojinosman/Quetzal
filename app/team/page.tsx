@@ -1,7 +1,25 @@
 export const dynamic = "force-static"
 
+import Image from "next/image";
+import { Linkedin } from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
+
+interface ProjectAdvisor {
+  name: string;
+  role: string;
+  image: string;
+  linkedin: string;
+}
+
+const projectAdvisors: ProjectAdvisor[] = [
+  {
+    name: "Saeed Shaffar",
+    role: "Project Advisor",
+    image: "/images/team/SShaffar.jpg",
+    linkedin: "scott-shaffar-2527972/", 
+  },
+];
 
 const meTeam: TeamMember[] = [
   {
@@ -19,12 +37,17 @@ const meTeam: TeamMember[] = [
   },
   {
     name: "Laith Abouhasoun",
-    role: "Procurement Lead",
-    description: "Mechanical Engineering team.",
+    role: "Design & Manufacturing Engineer | Budget Manager | Safety Pilot",
+    description: " Designed and iterated mechanical subsystems (iris gripper, motor mounts, structural connectors, landing gear) and supported hands-on fabrication, 3D printing, assembly, and testing across the full VTOL build.",
     image: "/images/team/laith.jpg",
     linkedin: "laith-abouhasoun-482132227",
-    resumeUrl: "",
-    resumeHighlights: [],
+    resumeUrl: "/resumes/Laith-Resume.pdf",
+    resumeHighlights: [
+      "B.S. in Mechanical Engineering – San Diego State University",
+      "Mechanical Systems Design & Structural Development",
+      "Prototype Fabrication, Integration & Testing",
+      "Project Budget Planning & Cost Control"
+    ],
   },
   {
     name: "Christian Mandigma",
@@ -199,6 +222,45 @@ export default function TeamPage() {
                   <TeamMemberCard key={member.name} member={member} />
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Project Advisors */}
+        <section className="border-b border-border">
+          <div className="mx-auto max-w-6xl px-6 py-16">
+            <h2 className="mb-8 text-lg font-semibold text-foreground">Project Advisors</h2>
+            <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {projectAdvisors.map((advisor) => (
+                <div
+                  key={advisor.name}
+                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
+                >
+                  <div className="relative aspect-square overflow-hidden">
+                    <Image
+                      src={advisor.image}
+                      alt={advisor.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-lg font-semibold text-foreground">{advisor.name}</h3>
+                    <p className="mb-3 text-sm font-medium text-primary">{advisor.role}</p>
+                    {advisor.linkedin && (
+                      <a
+                        href={`https://linkedin.com/in/${advisor.linkedin}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <Linkedin className="size-4" />
+                        LinkedIn
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
