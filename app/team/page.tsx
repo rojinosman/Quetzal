@@ -14,7 +14,7 @@ interface ProjectAdvisor {
 
 const projectAdvisors: ProjectAdvisor[] = [
   {
-    name: "Saeed Shaffar",
+    name: "Scott Shaffar",
     role: "Project Advisor",
     image: "/images/team/SShaffar.jpg",
     linkedin: "scott-shaffar-2527972/", 
