@@ -30,7 +30,7 @@ const meTeam: TeamMember[] = [
     image: "/images/team/utku.jpg",
     linkedin: "utku-solmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
-    portfolioUrl: "",
+    portfolioUrl: "/resumes/utku-portfolio.pdf",
     resumeHighlights: [
       "Multidisciplinary Leadership: Led a 14-member engineering team to develop a competition-ready, autonomous VTOL UAS platform. ",
       "Design Mentorship: Directed technical peer reviews for sub-teams, standardizing SOLIDWORKS practices to improve overall component fidelity. ",
