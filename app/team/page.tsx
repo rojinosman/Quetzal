@@ -32,10 +32,10 @@ const meTeam: TeamMember[] = [
     resumeUrl: "/resumes/utku-resume.pdf",
     portfolioUrl: "/resumes/utku-portfolio.pdf",
     resumeHighlights: [
-      "Multidisciplinary Leadership: Led a 14-member engineering team to develop a competition-ready, autonomous VTOL UAS platform. ",
-      "Design Mentorship: Directed technical peer reviews for sub-teams, standardizing SOLIDWORKS practices to improve overall component fidelity. ",
-      "Structural Integrity: Managed the SOLIDWORKS master assembly and performed FEA on carbon-fiber wing spars to ensure reliability. ",
-      "Operational Success: Secured $2,000 in additional funding and validated design feasibility through six successful flight tests. ",
+      "Led a 14-member engineering team to develop a competition-ready, autonomous VTOL UAS platform. ",
+      "Directed technical peer reviews for sub-teams, standardizing SOLIDWORKS practices to improve overall component fidelity. ",
+      "Managed the SOLIDWORKS master assembly and performed FEA on carbon-fiber wing spars to ensure reliability. ",
+      "Secured $2,000 in additional funding and validated design feasibility through six successful flight tests. ",
     ],
   },
   {
