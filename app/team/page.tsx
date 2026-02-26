@@ -26,14 +26,16 @@ const meTeam: TeamMember[] = [
     name: "Utku Solmaz",
     role: "ME Lead",
     description:
-      "Mechanical Engineering team. Leading mechanical design and fabrication efforts.",
+      "As Team Lead, I coordinated 14 multidisciplinary engineers across the end-to-end development of an autonomous VTOL UAS. I personally managed the master SOLIDWORKS assembly, performed FEA on the air frame. Directed technical design reviews and provided peer mentorship, resulting in optimized, high-performance components.",
     image: "/images/team/utku.jpg",
     linkedin: "utku-solmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
     portfolioUrl: "",
     resumeHighlights: [
-      "Certified SolidWorks Professional",
-      "Experience in composite materials fabrication",
+      "Multidisciplinary Leadership: Led a 14-member engineering team to develop a competition-ready, autonomous VTOL UAS platform. ",
+      "Design Mentorship: Directed technical peer reviews for sub-teams, standardizing SOLIDWORKS practices to improve overall component fidelity. ",
+      "Structural Integrity: Managed the SOLIDWORKS master assembly and performed FEA on carbon-fiber wing spars to ensure reliability. ",
+      "Operational Success: Secured $2,000 in additional funding and validated design feasibility through six successful flight tests. ",
     ],
   },
   {
