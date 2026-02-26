@@ -1,7 +1,7 @@
 export const dynamic = "force-static"
 
 import Image from "next/image";
-import { Linkedin } from "lucide-react";
+import { Linkedin, University } from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card";
 
@@ -32,10 +32,10 @@ const meTeam: TeamMember[] = [
     resumeUrl: "/resumes/utku-resume.pdf",
     portfolioUrl: "/resumes/utku-portfolio.pdf",
     resumeHighlights: [
-      "Led a 14-member engineering team to develop a competition-ready, autonomous VTOL UAS platform. ",
-      "Directed technical peer reviews for sub-teams, standardizing SOLIDWORKS practices to improve overall component fidelity. ",
-      "Managed the SOLIDWORKS master assembly and performed FEA on carbon-fiber wing spars to ensure reliability. ",
-      "Secured $2,000 in additional funding and validated design feasibility through six successful flight tests. ",
+      "B.S. Mechanical Engineering, San Diego State University",
+      "Directed technical peer reviews, improved component fidelity.",
+      "SOLIDWORKS master assembly and performed FEA on air frame.",
+      "Validated design feasibility and authored testing documentation.",
     ],
   },
   {
