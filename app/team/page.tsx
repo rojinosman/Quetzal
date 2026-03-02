@@ -19,6 +19,12 @@ const projectAdvisors: ProjectAdvisor[] = [
     image: "/images/team/SShaffar.jpg",
     linkedin: "scott-shaffar-2527972/", 
   },
+  {
+    name: "Christopher Paolini",
+    role: "Project Advisor",
+    image: "/images/team/Paolini.png",
+    linkedin: "paolini",
+  },
 ];
 
 const meTeam: TeamMember[] = [
