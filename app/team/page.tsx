@@ -22,7 +22,7 @@ const projectAdvisors: ProjectAdvisor[] = [
   {
     name: "Christopher Paolini",
     role: "Project Advisor",
-    image: "/images/team/Paolini.png",
+    image: "/images/team/paolini.png",
     linkedin: "paolini",
   },
 ];
