@@ -48,7 +48,6 @@ const buildImages = [
   },
 ];
 
-// Shared card content for both mobile and desktop
 function GalleryCardContent({
   image,
   index,
@@ -97,7 +96,6 @@ export function ScrollingGallery() {
 
   return (
     <div className="flex flex-col items-center">
-      {/* Horizontal scroll gallery - scroll left/right to browse on all devices */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -113,7 +111,6 @@ export function ScrollingGallery() {
         ))}
       </div>
 
-      {/* Scrollbar & labels */}
       <div className="w-full max-w-2xl mx-auto px-[5vw] pb-8">
         <div className="h-2 rounded-full bg-muted/80 overflow-hidden">
           <div

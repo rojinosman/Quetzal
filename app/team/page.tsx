@@ -65,7 +65,7 @@ const meTeam: TeamMember[] = [
     description: "Mechanical Engineering team.",
     image: "/images/team/ChristianM.jpg",
     linkedin: "christian-mandigma-3b0477182",
-    resumeUrl: "",
+    resumeUrl: "/resumes/Christian-resume.pdf",
     portfolioUrl: "",
     resumeHighlights: [],
   },
@@ -75,7 +75,7 @@ const meTeam: TeamMember[] = [
     description: "Mechanical Engineering team.",
     image: "/images/team/jonah.jpg",
     linkedin: "jonaholsen",
-    resumeUrl: "",
+    resumeUrl: "/resumes/jonah-resume.pdf",
     portfolioUrl: "",
     resumeHighlights: [],
   },
@@ -199,7 +199,6 @@ export default function TeamPage() {
       <Navigation />
 
       <main className="pt-20">
-        {/* Hero Section */}
         <section className="border-b border-border">
           <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
             <p className="mb-4 text-sm font-medium tracking-wider text-primary uppercase">
@@ -219,25 +218,21 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Team Grid - 3 columns: ME (left), AE (middle), ECE (right) */}
         <section className="border-b border-border">
           <div className="mx-auto max-w-6xl px-6 py-16">
             <div className="grid gap-8 lg:grid-cols-3">
-              {/* ME - Left column */}
               <div className="flex flex-col gap-6">
                 <h2 className="text-lg font-semibold text-foreground">Mechanical Engineering</h2>
                 {meTeam.map((member) => (
                   <TeamMemberCard key={member.name} member={member} />
                 ))}
               </div>
-              {/* AE - Middle column */}
               <div className="flex flex-col gap-6">
                 <h2 className="text-lg font-semibold text-foreground">Aerospace Engineering</h2>
                 {aeTeam.map((member) => (
                   <TeamMemberCard key={member.name} member={member} />
                 ))}
               </div>
-              {/* ECE - Right column */}
               <div className="flex flex-col gap-6">
                 <h2 className="text-lg font-semibold text-foreground">Electrical & Computer Engineering</h2>
                 {eceTeam.map((member) => (
@@ -248,7 +243,6 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Project Advisors */}
         <section className="border-b border-border">
           <div className="mx-auto max-w-6xl px-6 py-16">
             <h2 className="mb-8 text-lg font-semibold text-foreground">Project Advisors</h2>
@@ -287,7 +281,6 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Questions Section */}
         <section>
           <div className="mx-auto max-w-6xl px-6 py-20">
             <div className="rounded-xl border border-border bg-card p-8 text-center md:p-12">
@@ -309,7 +302,6 @@ export default function TeamPage() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-border/50 bg-card/30 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-6 py-4">
           <div className="flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
