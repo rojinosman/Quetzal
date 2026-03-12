@@ -104,11 +104,11 @@ const aeTeam: TeamMember[] = [
   },
   {
     name: "Cristian Rosete",
-    role: "Mechanical Integration Engineer",
+    role: "Avionics Integration Engineer",
     description: "Aerospace Engineering team.",
     image: "/images/team/cristian.jpg",
     linkedin: "cristian-j-rosete",
-    resumeUrl: "",
+    resumeUrl: "/resumes/Cristian-resume.pdf",
     portfolioUrl: "",
     resumeHighlights: [],
   },
