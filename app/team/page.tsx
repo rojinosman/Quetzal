@@ -137,7 +137,7 @@ const aeTeam: TeamMember[] = [
 const eceTeam: TeamMember[] = [
   {
     name: "Rojin Osman",
-    role: "ECE Lead",
+    role: "ECE Lead & Web Developer",
     description:
       "Electrical and Computer Engineering team. Overseeing project management, systems integration, and overall design architecture.",
     image: "/images/team/Rojin.JPG",
