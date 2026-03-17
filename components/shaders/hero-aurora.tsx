@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const vertexShader = `
@@ -201,10 +201,35 @@ function HeroAuroraMesh() {
   );
 }
 
+function InvalidateOnInterval({ fps = 30 }: { fps?: number }) {
+  const invalidate = useThree((s) => s.invalidate);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (reduceMotion) return;
+
+    const intervalMs = Math.max(16, Math.round(1000 / fps));
+    const id = window.setInterval(() => {
+      if (document.visibilityState === "visible") invalidate();
+    }, intervalMs);
+
+    return () => window.clearInterval(id);
+  }, [fps, invalidate]);
+
+  return null;
+}
+
 export function HeroAurora() {
   return (
     <div className="absolute inset-0 -z-10">
-      <Canvas camera={{ position: [0, 0, 5], fov: 50 }} gl={{ antialias: true }}>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 50 }}
+        frameloop="demand"
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, powerPreference: "low-power" }}
+      >
+        <InvalidateOnInterval fps={24} />
         <HeroAuroraMesh />
       </Canvas>
     </div>

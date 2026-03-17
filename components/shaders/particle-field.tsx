@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const particleVertexShader = `
@@ -133,15 +133,45 @@ function Particles({ count = 2000 }) {
   );
 }
 
+function InvalidateOnInterval({ fps = 30 }: { fps?: number }) {
+  const invalidate = useThree((s) => s.invalidate);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (reduceMotion) return;
+
+    const intervalMs = Math.max(16, Math.round(1000 / fps));
+    const id = window.setInterval(() => {
+      if (document.visibilityState === "visible") invalidate();
+    }, intervalMs);
+
+    return () => window.clearInterval(id);
+  }, [fps, invalidate]);
+
+  return null;
+}
+
 export function ParticleField() {
+  const [count, setCount] = useState(900);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const nextCount = window.innerWidth < 768 ? 600 : 1000;
+    setCount(nextCount);
+  }, []);
+
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
-        gl={{ antialias: true, alpha: true }}
+        frameloop="demand"
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
       >
-        <Particles count={1500} />
+        <InvalidateOnInterval fps={24} />
+        <Particles count={count} />
       </Canvas>
     </div>
   );

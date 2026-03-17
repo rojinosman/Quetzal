@@ -1,13 +1,12 @@
 "use client";
 
 import { Suspense, useState, useRef, useEffect, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   OrbitControls,
   Html,
   Environment,
   ContactShadows,
-  Float,
   useGLTF,
 } from "@react-three/drei";
 import * as THREE from "three";
@@ -285,27 +284,26 @@ function DroneModel({
   });
 
   return (
-    <Float speed={DRONE_STATIC_MODE ? 0 : 2} rotationIntensity={DRONE_STATIC_MODE ? 0 : 0.05} floatIntensity={DRONE_STATIC_MODE ? 0 : 0.2}>
-      <group ref={groupRef} scale={2}>
-        {AXES_VISIBLE && (
-          <group position={[0, 0, 0]}>
-            <axesHelper args={[0.4]} />
-            <Html position={[0.45, 0, 0]} style={{ color: "#ef4444", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+X</Html>
-            <Html position={[0, 0.45, 0]} style={{ color: "#22c55e", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Y</Html>
-            <Html position={[0, 0, 0.45]} style={{ color: "#3b82f6", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Z</Html>
-          </group>
-        )}
-        <DroneCADModel
-          activeComponent={activeComponent}
-          setActiveComponent={setActiveComponent}
-          onBoundsComputed={onBoundsComputed}
-        />
-      </group>
-    </Float>
+    <group ref={groupRef} scale={2}>
+      {AXES_VISIBLE && (
+        <group position={[0, 0, 0]}>
+          <axesHelper args={[0.4]} />
+          <Html position={[0.45, 0, 0]} style={{ color: "#ef4444", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+X</Html>
+          <Html position={[0, 0.45, 0]} style={{ color: "#22c55e", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Y</Html>
+          <Html position={[0, 0, 0.45]} style={{ color: "#3b82f6", fontSize: "12px", fontWeight: "bold", pointerEvents: "none" }}>+Z</Html>
+        </group>
+      )}
+      <DroneCADModel
+        activeComponent={activeComponent}
+        setActiveComponent={setActiveComponent}
+        onBoundsComputed={onBoundsComputed}
+      />
+    </group>
   );
 }
 
 function CameraController() {
+  const invalidate = useThree((s) => s.invalidate);
   return (
     <OrbitControls
       enablePan={false}
@@ -313,6 +311,7 @@ function CameraController() {
       maxDistance={4}
       minPolarAngle={Math.PI / 6}
       maxPolarAngle={Math.PI / 2.2}
+      onChange={() => invalidate()}
     />
   );
 }
@@ -363,7 +362,9 @@ export function DroneModelViewer() {
       <div className="relative flex-1 min-w-0">
       <Canvas
         camera={{ position: [1.8, 1.2, 2.5], fov: 35 }}
-        gl={{ antialias: true, alpha: true }}
+        frameloop="demand"
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
       >
         <Suspense fallback={<LoadingSpinner />}>
@@ -373,7 +374,6 @@ export function DroneModelViewer() {
             angle={0.15}
             penumbra={1}
             intensity={1}
-            castShadow
           />
           <pointLight position={[-10, -10, -10]} intensity={0.3} color="#0891b2" />
           <pointLight position={[5, 5, -5]} intensity={0.2} color="#14b8a6" />
@@ -390,6 +390,7 @@ export function DroneModelViewer() {
             scale={10}
             blur={2}
             far={4}
+            frames={1}
           />
           
           <Environment preset="city" />
