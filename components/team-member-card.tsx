@@ -25,6 +25,10 @@ interface TeamMemberCardProps {
 }
 
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
+  const linkedin = member.linkedin?.trim();
+  const resumeUrl = member.resumeUrl?.trim();
+  const portfolioUrl = member.portfolioUrl?.trim();
+
   return (
     <div className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
       <HoverCard openDelay={200} closeDelay={100}>
@@ -54,27 +58,27 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
               </p>
 
               {/* LinkedIn & Portfolio Links */}
-              {(member.linkedin || member.portfolioUrl) && (
+              {(!!linkedin || !!portfolioUrl) && (
                 <div className="mt-4 space-y-2 pt-4 border-t border-border">
-                  {member.linkedin && (
+                  {!!linkedin && (
                     <div className="flex items-center gap-2">
                       <Linkedin className="size-4 shrink-0 text-muted-foreground" />
                       <a
-                        href={`https://linkedin.com/in/${member.linkedin}`}
+                        href={`https://linkedin.com/in/${linkedin}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-muted-foreground transition-colors hover:text-primary"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        @{member.linkedin}
+                        @{linkedin}
                       </a>
                     </div>
                   )}
-                  {member.portfolioUrl?.trim() && (
+                  {!!portfolioUrl && (
                     <div className="flex items-center gap-2">
                       <Briefcase className="size-4 shrink-0 text-muted-foreground" />
                       <a
-                        href={member.portfolioUrl}
+                        href={portfolioUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -108,7 +112,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           </div>
 
           <div className="p-4">
-            {(member.resumeHighlights.length > 0 || member.resumeUrl) && (
+            {(member.resumeHighlights.length > 0 || !!resumeUrl) && (
               <>
                 {member.resumeHighlights.length > 0 && (
                   <>
@@ -129,7 +133,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                   </>
                 )}
 
-                {member.resumeUrl && (
+                {!!resumeUrl && (
                   <Button
                     asChild
                     className="mt-4 w-full gap-2 bg-transparent"
@@ -137,7 +141,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                     size="sm"
                   >
                     <a
-                      href={member.resumeUrl}
+                      href={resumeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -146,7 +150,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                     </a>
                   </Button>
                 )}
-                {member.portfolioUrl && (
+                {!!portfolioUrl && (
                   <Button
                     asChild
                     className="mt-4 w-full gap-2 bg-transparent"
@@ -154,7 +158,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                     size="sm"
                   >
                     <a
-                      href={member.portfolioUrl}
+                      href={portfolioUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -163,7 +167,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                     </a>
                   </Button>
                 )}
-                {member.resumeHighlights.length === 0 && !member.resumeUrl && (
+                {member.resumeHighlights.length === 0 && !resumeUrl && (
                   <p className="text-sm text-muted-foreground">
                     No resume available yet.
                   </p>
