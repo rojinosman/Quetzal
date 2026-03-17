@@ -83,7 +83,7 @@ const meTeam: TeamMember[] = [
     name: "Gavin Rask",
     role: "Structures Engineer",
     description: "Mechanical Engineering team.",
-    image: "/images/team/Gavin.jpg",
+    image: "/images/team/Gavin1.jpg",
     linkedin: "gavin-rask-99213a386",
     resumeUrl: "/resumes/Rask-Resume.pdf",
     portfolioUrl: "",
