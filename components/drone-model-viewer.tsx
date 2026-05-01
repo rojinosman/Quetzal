@@ -11,12 +11,21 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronLeft, ChevronRight, RotateCcw, Move3D, PanelRightOpen, PanelLeftClose } from "lucide-react";
 
-const MODEL_URL = "/models/QuetzalV2.glb";
+export const DRONE_MODEL_URL_V1 = "/models/drone.glb";
+export const DRONE_MODEL_URL_V2 = "/models/QuetzalV2.glb";
 
-// Preload the default model (helps avoid a visible pop-in).
-useGLTF.preload(MODEL_URL);
+export type DroneModelVersion = "v1" | "v2";
+
+const MODEL_URL_BY_VERSION: Record<DroneModelVersion, string> = {
+  v1: DRONE_MODEL_URL_V1,
+  v2: DRONE_MODEL_URL_V2,
+};
+
+useGLTF.preload(DRONE_MODEL_URL_V1);
+useGLTF.preload(DRONE_MODEL_URL_V2);
 
 interface ComponentInfo {
   name: string;
@@ -100,14 +109,13 @@ function ComponentMarker({
 }
 
 // Loads a user-supplied CAD export (GLB/GLTF) from /public.
-// Drop your file in:  public/models/drone.glb  (or update MODEL_URL)
 function DroneCADModel({
-  url = MODEL_URL,
+  url,
   activeComponent,
   setActiveComponent,
   onBoundsComputed,
 }: {
-  url?: string;
+  url: string;
   activeComponent: number | null;
   setActiveComponent: (index: number | null) => void;
   onBoundsComputed?: (data: { positions: [number, number, number][]; scale: number }) => void;
@@ -267,10 +275,12 @@ const DRONE_STATIC_MODE = true;
 const AXES_VISIBLE = false;
 
 function DroneModel({
+  modelUrl,
   activeComponent,
   setActiveComponent,
   onBoundsComputed,
 }: {
+  modelUrl: string;
   activeComponent: number | null;
   setActiveComponent: (index: number | null) => void;
   onBoundsComputed?: (data: { positions: [number, number, number][]; scale: number }) => void;
@@ -294,6 +304,7 @@ function DroneModel({
         </group>
       )}
       <DroneCADModel
+        url={modelUrl}
         activeComponent={activeComponent}
         setActiveComponent={setActiveComponent}
         onBoundsComputed={onBoundsComputed}
@@ -327,12 +338,21 @@ function LoadingSpinner() {
   );
 }
 
-export function DroneModelViewer() {
+export function DroneModelViewer({
+  initialVersion = "v1",
+}: {
+  initialVersion?: DroneModelVersion;
+}) {
+  const [modelVersion, setModelVersion] =
+    useState<DroneModelVersion>(initialVersion);
+  const modelUrl = MODEL_URL_BY_VERSION[modelVersion];
+
   const [activeComponent, setActiveComponent] = useState<number | null>(null);
-  const [boundsData, setBoundsData] = useState<{
-    positions: [number, number, number][];
-    scale: number;
-  } | null>(null);
+
+  useEffect(() => {
+    setModelVersion(initialVersion);
+    setActiveComponent(null);
+  }, [initialVersion]);
   
   const handlePrevComponent = () => {
     if (activeComponent === null) {
@@ -355,9 +375,10 @@ export function DroneModelViewer() {
   };
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  
+
   return (
-    <div className="flex w-full h-[600px] max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
+    <div className="flex w-full flex-col gap-3">
+      <div className="relative flex h-[600px] w-full max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
       {/* Drone canvas */}
       <div className="relative flex-1 min-w-0">
       <Canvas
@@ -379,9 +400,10 @@ export function DroneModelViewer() {
           <pointLight position={[5, 5, -5]} intensity={0.2} color="#14b8a6" />
           
           <DroneModel
+            key={modelUrl}
+            modelUrl={modelUrl}
             activeComponent={activeComponent}
             setActiveComponent={setActiveComponent}
-            onBoundsComputed={setBoundsData}
           />
           
           <ContactShadows
@@ -401,9 +423,28 @@ export function DroneModelViewer() {
       {/* UI Overlay */}
       <div className="absolute top-4 left-4 right-4 flex items-start justify-between pointer-events-none">
         <div className="pointer-events-auto">
-          <h3 className="text-lg font-semibold text-foreground mb-1">
-            Interactive 3D Model
-          </h3>
+          <div className="mb-1 flex flex-wrap items-center gap-2">
+            <h3 className="text-lg font-semibold text-foreground">
+              Interactive 3D Model
+            </h3>
+            <Tabs
+              value={modelVersion}
+              onValueChange={(v) => {
+                const next = v === "v2" ? "v2" : "v1";
+                setModelVersion(next);
+                setActiveComponent(null);
+              }}
+            >
+              <TabsList className="h-10 bg-background/80 backdrop-blur-sm border border-border">
+                <TabsTrigger value="v1" className="px-4 text-sm font-semibold">
+                  Version 1
+                </TabsTrigger>
+                <TabsTrigger value="v2" className="px-4 text-sm font-semibold">
+                  Version 2
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
           <p className="text-sm text-muted-foreground">
             Select a component or drag to rotate
           </p>
@@ -486,6 +527,7 @@ export function DroneModelViewer() {
             </button>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
