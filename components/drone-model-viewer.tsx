@@ -13,7 +13,7 @@ import * as THREE from "three";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, RotateCcw, Move3D, PanelRightOpen, PanelLeftClose } from "lucide-react";
 
-const MODEL_URL = "/models/drone.glb";
+const MODEL_URL = "/models/QuetzalV2.glb";
 
 // Preload the default model (helps avoid a visible pop-in).
 useGLTF.preload(MODEL_URL);
