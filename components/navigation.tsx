@@ -10,6 +10,7 @@ export function Navigation() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/team", label: "Team" },
+    { href: "/gallery", label: "Gallery" },
   ];
 
   return (
