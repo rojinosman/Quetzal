@@ -339,7 +339,7 @@ function LoadingSpinner() {
 }
 
 export function DroneModelViewer({
-  initialVersion = "v1",
+  initialVersion = "v2",
 }: {
   initialVersion?: DroneModelVersion;
 }) {

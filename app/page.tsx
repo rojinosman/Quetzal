@@ -2,8 +2,7 @@ export const dynamic = "force-static"
 import { Navigation } from "@/components/navigation";
 import { ScrollingGallery } from "@/components/scrolling-gallery";
 import { FirstFlightVideo } from "@/components/first-flight-video";
-import { HeroAurora } from "@/components/shaders/hero-aurora";
-import { ParticleField } from "@/components/shaders/particle-field";
+import { FinalProductVideo } from "@/components/final-product-video";
 import { DroneModelViewer } from "@/components/drone-model-viewer";
 import { ArrowRight, Layers, Cpu, Cog, Zap } from "lucide-react";
 import Link from "next/link";
@@ -17,13 +16,15 @@ export default function Home() {
       <main className="pt-20">
         {/* Hero Section with Aurora Effect */}
         <section className="relative min-h-screen overflow-hidden flex items-center">
-          {/* Aurora Background - Only in Hero */}
-          <HeroAurora />
-          
-          {/* Particle Field Overlay */}
-          <div className="absolute inset-0 z-0">
-            <ParticleField />
-          </div>
+          <video
+            className="absolute inset-0 z-0 h-full w-full object-cover opacity-75"
+            src="/videos/hero-background.mov"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="absolute inset-0 z-0 bg-background/25" />
 
           <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-32">
             <div className="max-w-3xl">
@@ -54,36 +55,6 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-
-            {/* Tech Stats Cards */}
-            <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { icon: Layers, label: "Carbon Fiber Frame", value: '0.75"OD' },
-                { icon: Cpu, label: "Flight Controller", value: "Pixhawk" },
-                { icon: Cog, label: "Motor Configuration", value: "4x T-Motor U5 KV400" },
-                { icon: Zap, label: "Power System", value: "6S LiPo" },
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="group relative overflow-hidden rounded-xl border border-border/50 bg-card/30 backdrop-blur-md p-4 transition-all hover:bg-card/50 hover:border-primary/30"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <stat.icon className="size-5" />
-                    </div>
-                    <div>
-                      <p className="text-xl font-bold text-foreground">
-                        {stat.value}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Scroll indicator */}
@@ -104,6 +75,23 @@ export default function Home() {
                 />
               </svg>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border/50 bg-background">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+                <span className="text-sm font-medium text-primary">
+                  Final Product
+                </span>
+              </div>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
+                Final Product Flying
+              </h2>
+            </div>
+
+            <FinalProductVideo />
           </div>
         </section>
 
@@ -180,9 +168,9 @@ export default function Home() {
             <div className="grid gap-8 md:grid-cols-4">
               {[
                 { value: "14", label: "Team Members" },
-                { value: "6", label: "Months of Development" },
-                { value: "8", label: "Flight Tests" },
-                { value: "6", label: "Successful Flights" },
+                { value: "8", label: "Months of Development" },
+                { value: "23", label: "Flight Tests" },
+                { value: "18", label: "Successful Flights" },
               ].map((stat, index) => (
                 <div
                   key={index}
