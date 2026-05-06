@@ -25,6 +25,12 @@ const projectAdvisors: ProjectAdvisor[] = [
     image: "/images/team/paolini.jpeg",
     linkedin: "paolini",
   },
+  {
+    name: "Roni Goldshmid",
+    role: "Project Advisor",
+    image: "/images/team/roni.png",
+    linkedin: "",
+  },
 ];
 
 const meTeam: TeamMember[] = [

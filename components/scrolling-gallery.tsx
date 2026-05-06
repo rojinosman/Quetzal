@@ -46,6 +46,51 @@ const buildImages = [
     title: "Final Assembly of Iteration 1",
     description: "Final assembly of wings, fuselage, and components for first iteration without the electronics",
   },
+  {
+    src: "/images/build-journey/v1-build-02.png",
+    alt: "Fabrication of the second iteration of the wings",
+    title: "V2 Wing Fabrication",
+    description: "Fabrication of the second iteration of the wings.",
+  },
+  {
+    src: "/images/build-journey/v1-build-03.png",
+    alt: "Vacuum sealing the second iteration of the wings",
+    title: "V2 Wing vacuum sealing",
+    description: "Vacuum sealing the second iteration of the wings.",
+  },
+  {
+    src: "/images/build-journey/v1-build-04.png",
+    alt: "Red airframe assembly positioned in fabrication workshop",
+    title: "Assembled V2 Airframe and Wings",
+    description: "Assembled the second iteration of the airframe and wings.",
+  },
+  {
+    src: "/images/build-journey/v1-build-01.png",
+    alt: "Team members working on the drone frame in the fabrication lab",
+    title: "Lab Integration Session",
+    description: "Hands-on systems integration and assembly work in the innovation center.",
+  },
+  {
+    src: "/images/build-journey/v1-build-05.png",
+    alt: "Discovered a problem with the wiring and had to fix it.",
+    title: "V2 Electrical Integration Hiccup",
+    description: "Discovered a problem with the wiring and had to fix it.",
+  },
+  {
+    src: "/images/build-journey/v1-build-06-electrical.png",
+    alt: "Team members routing and securing wiring on the VTOL airframe",
+    title: "Electrical Integration",
+    description:
+      "Integrating power distribution, ESCs, and harness routing across the frame for system bring-up.",
+  },
+  {
+    src: "/images/build-journey/final-drone.png",
+    alt: "Completed Quetzal VTOL with red side panels on grass outdoors",
+    title: "Final Drone",
+    description:
+      "Fully integrated airframe ready for field testing and flight operations.",
+  },
+
 ];
 
 function GalleryCardContent({
@@ -55,15 +100,27 @@ function GalleryCardContent({
   image: (typeof buildImages)[0];
   index: number;
 }) {
+  const isFinalDrone = image.src.includes("final-drone");
+
   return (
     <>
       <Image
         src={image.src || "/placeholder.svg"}
         alt={image.alt}
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className={
+          isFinalDrone
+            ? "object-cover object-[50%_48%] scale-[1.25] -translate-y-[16%] motion-safe:transition-transform motion-safe:duration-700 group-hover:scale-[1.3] motion-safe:group-hover:-translate-y-[16%]"
+            : "object-cover transition-transform duration-700 group-hover:scale-105"
+        }
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+      <div
+        className={
+          isFinalDrone
+            ? "absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent"
+            : "absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"
+        }
+      />
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
         <span className="inline-block px-3 py-1 mb-3 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30">
           Phase {index + 1}
