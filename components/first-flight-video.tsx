@@ -76,6 +76,7 @@ export function FirstFlightVideo() {
           onClick={togglePlay}
           playsInline
         >
+          <source src="/videos/first-flight-optimized.mp4" type="video/mp4" />
           <source src="/videos/first-flight.mp4" type="video/mp4" />
           <source src="/videos/first-flight.mov" type="video/quicktime" />
           Your browser does not support the video tag.

@@ -18,7 +18,7 @@ export default function Home() {
         <section className="relative min-h-screen overflow-hidden flex items-center">
           <video
             className="absolute inset-0 z-0 h-full w-full object-cover opacity-75"
-            src="/videos/hero-background.mov"
+            src="/videos/hero-background-mobile.mp4"
             autoPlay
             muted
             loop
