@@ -269,7 +269,7 @@ function ProceduralDrone() {
 }
 
 // Set to false to re-enable drone rotation and float animation
-const DRONE_STATIC_MODE = true;
+const DRONE_STATIC_MODE = false;
 
 // Set to false to hide axis helper when done placing markers
 const AXES_VISIBLE = false;
@@ -383,7 +383,7 @@ export function DroneModelViewer({
       <div className="relative flex-1 min-w-0">
       <Canvas
         camera={{ position: [1.8, 1.2, 2.5], fov: 35 }}
-        frameloop="demand"
+        frameloop="always"
         dpr={[1, 1.5]}
         gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
