@@ -40,7 +40,7 @@ const meTeam: TeamMember[] = [
     description:
       "As Team Lead, I coordinated 14 multidisciplinary engineers across the end-to-end development of an autonomous VTOL UAS. I personally managed the master SOLIDWORKS assembly, performed FEA on the air frame. Directed technical design reviews and provided peer mentorship, resulting in optimized, high-performance components.",
     image: "/images/team/utku.jpg",
-    linkedin: "utku-solmaz",
+    linkedin: "utkusolmaz",
     resumeUrl: "/resumes/utku-resume.pdf",
     portfolioUrl: "/resumes/utku-portfolio.pdf",
     resumeHighlights: [
@@ -123,7 +123,7 @@ const aeTeam: TeamMember[] = [
     role: "Aerodynamics Engineer",
     description: "Aerospace Engineering team.",
     image: "/images/team/kyle.jpg",
-    linkedin: "",
+    linkedin: "kyle-loutzenhiser-4786501b0",
     resumeUrl: "",
     portfolioUrl: "",
     resumeHighlights: [],
