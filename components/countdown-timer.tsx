@@ -230,19 +230,11 @@ function CountdownDigits({
   const unitClass =
     "mt-4 text-xs font-medium tracking-[0.2em] text-white uppercase md:mt-5 md:text-sm";
 
-  const segments =
-    parts.days > 0
-      ? [
-          { value: padTwo(parts.days), label: "Days", id: "days" },
-          { value: padTwo(parts.hours), label: "Hours", id: "hours" },
-          { value: padTwo(parts.minutes), label: "Minutes", id: "minutes" },
-          { value: padTwo(parts.seconds), label: "Seconds", id: "seconds" },
-        ]
-      : [
-          { value: padTwo(parts.hours), label: "Hours", id: "hours" },
-          { value: padTwo(parts.minutes), label: "Minutes", id: "minutes" },
-          { value: padTwo(parts.seconds), label: "Seconds", id: "seconds" },
-        ];
+  const segments = [
+    { value: padTwo(parts.hours), label: "Hours", id: "hours" },
+    { value: padTwo(parts.minutes), label: "Minutes", id: "minutes" },
+    { value: padTwo(parts.seconds), label: "Seconds", id: "seconds" },
+  ];
 
   if (parts.isComplete) {
     return (
