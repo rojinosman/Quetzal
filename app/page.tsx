@@ -212,8 +212,8 @@ export default function Home() {
               {[
                 { value: "14", label: "Team Members" },
                 { value: "8", label: "Months of Development" },
-                { value: "23", label: "Flight Tests" },
-                { value: "18", label: "Successful Flights" },
+                { value: "52", label: "Flight Tests" },
+                { value: "44", label: "Successful Flights" },
               ].map((stat, index) => (
                 <div
                   key={index}
