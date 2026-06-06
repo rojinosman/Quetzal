@@ -211,7 +211,7 @@ export default function Home() {
             <div className="grid gap-8 md:grid-cols-4">
               {[
                 { value: "14", label: "Team Members" },
-                { value: "8", label: "Months of Development" },
+                { value: "10", label: "Months of Development" },
                 { value: "52", label: "Flight Tests" },
                 { value: "44", label: "Successful Flights" },
               ].map((stat, index) => (
