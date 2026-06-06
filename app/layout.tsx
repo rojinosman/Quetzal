@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { CountdownProvider } from '@/components/countdown-provider'
+import { CountdownTimer } from '@/components/countdown-timer'
 import './globals.css'
 
 const GA_MEASUREMENT_ID = 'G-CPV831G41V'
@@ -53,7 +55,10 @@ export default function RootLayout({
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
-        {children}
+        <CountdownProvider>
+          <CountdownTimer />
+          {children}
+        </CountdownProvider>
         <Analytics />
       </body>
     </html>

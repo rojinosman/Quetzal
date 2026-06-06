@@ -123,3 +123,34 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes flip-down {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+.flip-down {
+  animation: flip-down 0.5s ease-in-out forwards;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.flip-face-front,
+.flip-face-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: bottom center;
+}
+
+.flip-face-front {
+  transform: rotateX(0deg);
+}
+
+.flip-face-back {
+  transform: rotateX(180deg);
+}

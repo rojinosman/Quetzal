@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useCountdownUI } from "@/components/countdown-provider";
 
 export function Navigation() {
   const pathname = usePathname();
+  const { miniBarVisible } = useCountdownUI();
 
   const links = [
     { href: "/", label: "Home" },
@@ -15,7 +17,12 @@ export function Navigation() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <header
+      className={cn(
+        "fixed left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md transition-[top]",
+        miniBarVisible ? "top-[4.5rem] sm:top-[4.75rem]" : "top-0"
+      )}
+    >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1">
         <Link href="/" className="flex items-center gap-2">
           <img
