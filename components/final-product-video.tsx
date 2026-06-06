@@ -62,6 +62,7 @@ export function FinalProductVideo() {
           ref={videoRef}
           className="size-full object-cover cursor-pointer"
           poster="/images/final-product-poster.png"
+          preload="none"
           muted
           onTimeUpdate={handleTimeUpdate}
           onPlay={() => setIsPlaying(true)}
@@ -70,8 +71,6 @@ export function FinalProductVideo() {
           playsInline
         >
           <source src="/videos/final-product-flight-mobile.mp4" type="video/mp4" />
-          <source src="/videos/final-product-flight.mp4" type="video/mp4" />
-          <source src="/videos/final-product-flight.mov" type="video/quicktime" />
           Your browser does not support the video tag.
         </video>
 

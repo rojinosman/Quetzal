@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   OrbitControls,
   Html,
-  Environment,
   ContactShadows,
   useGLTF,
 } from "@react-three/drei";
@@ -23,9 +22,6 @@ const MODEL_URL_BY_VERSION: Record<DroneModelVersion, string> = {
   v1: DRONE_MODEL_URL_V1,
   v2: DRONE_MODEL_URL_V2,
 };
-
-useGLTF.preload(DRONE_MODEL_URL_V1);
-useGLTF.preload(DRONE_MODEL_URL_V2);
 
 interface ComponentInfo {
   name: string;
@@ -286,10 +282,12 @@ function DroneModel({
   onBoundsComputed?: (data: { positions: [number, number, number][]; scale: number }) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
+  const invalidate = useThree((s) => s.invalidate);
 
   useFrame((state) => {
     if (!DRONE_STATIC_MODE && groupRef.current && activeComponent === null) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.15;
+      invalidate();
     }
   });
 
@@ -327,6 +325,12 @@ function CameraController() {
   );
 }
 
+function useModelPreload(modelUrl: string) {
+  useEffect(() => {
+    useGLTF.preload(modelUrl);
+  }, [modelUrl]);
+}
+
 function LoadingSpinner() {
   return (
     <Html center>
@@ -336,6 +340,16 @@ function LoadingSpinner() {
       </div>
     </Html>
   );
+}
+
+function RenderOnMount() {
+  const invalidate = useThree((s) => s.invalidate);
+
+  useEffect(() => {
+    invalidate();
+  }, [invalidate]);
+
+  return null;
 }
 
 export function DroneModelViewer({
@@ -376,6 +390,8 @@ export function DroneModelViewer({
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
+  useModelPreload(modelUrl);
+
   return (
     <div className="flex w-full flex-col gap-3">
       <div className="relative flex h-[600px] w-full max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm">
@@ -383,12 +399,13 @@ export function DroneModelViewer({
       <div className="relative flex-1 min-w-0">
       <Canvas
         camera={{ position: [1.8, 1.2, 2.5], fov: 35 }}
-        frameloop="always"
-        dpr={[1, 1.5]}
+        frameloop="demand"
+        dpr={[1, 1.25]}
         gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
       >
         <Suspense fallback={<LoadingSpinner />}>
+          <RenderOnMount />
           <ambientLight intensity={0.5} />
           <spotLight
             position={[10, 10, 10]}
@@ -414,8 +431,7 @@ export function DroneModelViewer({
             far={4}
             frames={1}
           />
-          
-          <Environment preset="city" />
+
           <CameraController />
         </Suspense>
       </Canvas>

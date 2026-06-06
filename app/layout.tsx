@@ -1,16 +1,12 @@
 import React from "react"
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { CountdownProvider } from '@/components/countdown-provider'
-import { CountdownTimer } from '@/components/countdown-timer'
+import { DeferredCountdown } from '@/components/deferred-countdown'
 import './globals.css'
 
 const GA_MEASUREMENT_ID = 'G-CPV831G41V'
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'Quetzal',
@@ -45,9 +41,9 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -56,7 +52,7 @@ export default function RootLayout({
           `}
         </Script>
         <CountdownProvider>
-          <CountdownTimer />
+          <DeferredCountdown />
           {children}
         </CountdownProvider>
         <Analytics />

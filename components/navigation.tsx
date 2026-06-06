@@ -30,6 +30,8 @@ export function Navigation() {
             alt="Quetzal"
             width={164}
             height={164}
+            decoding="async"
+            fetchPriority="high"
           />
         </Link>
 

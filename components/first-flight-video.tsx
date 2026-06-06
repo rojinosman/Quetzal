@@ -62,6 +62,7 @@ export function FirstFlightVideo() {
           ref={videoRef}
           className="size-full object-cover cursor-pointer"
           poster="/images/video-poster.jpg"
+          preload="none"
           muted
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => {
@@ -77,8 +78,6 @@ export function FirstFlightVideo() {
           playsInline
         >
           <source src="/videos/first-flight-optimized.mp4" type="video/mp4" />
-          <source src="/videos/first-flight.mp4" type="video/mp4" />
-          <source src="/videos/first-flight.mov" type="video/quicktime" />
           Your browser does not support the video tag.
         </video>
 

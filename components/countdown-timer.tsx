@@ -135,7 +135,7 @@ function FlipDigit({
     "font-bold leading-none tabular-nums text-white",
     large
       ? "text-5xl sm:text-7xl md:text-8xl lg:text-9xl"
-      : "text-2xl sm:text-3xl"
+      : "text-xl sm:text-3xl"
   );
 
   return (
@@ -144,7 +144,7 @@ function FlipDigit({
         "relative overflow-hidden rounded-md border border-zinc-700 bg-black",
         large
           ? "h-24 w-[4.5rem] shadow-[0_8px_24px_rgba(0,0,0,0.45)] sm:h-32 sm:w-24 md:h-40 md:w-28 lg:h-48 lg:w-32"
-          : "h-12 w-10 shadow-md sm:h-[3.25rem] sm:w-11"
+          : "h-11 w-[1.85rem] shadow-md sm:h-[3.25rem] sm:w-11"
       )}
       style={{ perspective: "600px" }}
     >
@@ -258,11 +258,11 @@ function CountdownDigits({
 
   if (!large) {
     return (
-      <div className="font-sans flex items-center gap-2 sm:gap-2.5">
+      <div className="font-sans flex shrink-0 items-center gap-1 sm:gap-2.5">
         {segments.map((segment, index) => (
           <React.Fragment key={segment.label}>
             {index > 0 && (
-              <span className="pb-0.5 text-xl font-bold text-white/35 sm:text-2xl">
+              <span className="pb-0.5 text-lg font-bold text-white/35 sm:text-2xl">
                 :
               </span>
             )}
@@ -314,7 +314,9 @@ export function CountdownTimer() {
           <p className="mb-8 text-base font-medium tracking-[0.25em] text-primary uppercase md:mb-12 md:text-lg">
             Countdown to Competition
           </p>
-          <CountdownDigits size="large" parts={parts} />
+          <div className="w-full max-w-[100vw] origin-center scale-[0.82] sm:scale-100">
+            <CountdownDigits size="large" parts={parts} />
+          </div>
         </div>
       </div>
     );
@@ -326,11 +328,13 @@ export function CountdownTimer() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[60] border-b border-white/10 bg-black/90 backdrop-blur-sm">
-      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-4 px-4 sm:h-[4.75rem] sm:px-6">
-        <span className="shrink-0 text-[11px] font-medium tracking-[0.22em] text-primary uppercase sm:text-xs">
+      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center px-3 sm:h-[4.75rem] sm:px-6">
+        <span className="hidden w-[5.5rem] shrink-0 text-xs font-medium tracking-[0.22em] text-primary uppercase sm:block">
           Competition
         </span>
-        <CountdownDigits size="small" parts={parts} />
+        <div className="flex min-w-0 flex-1 justify-center">
+          <CountdownDigits size="small" parts={parts} />
+        </div>
         <span className="hidden w-[5.5rem] shrink-0 sm:block" aria-hidden />
       </div>
     </div>

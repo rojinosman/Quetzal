@@ -108,6 +108,8 @@ function GalleryCardContent({
         src={image.src || "/placeholder.svg"}
         alt={image.alt}
         fill
+        loading="lazy"
+        sizes="(max-width: 768px) 85vw, (max-width: 1024px) 60vw, 50vw"
         className={
           isFinalDrone
             ? "object-cover object-[50%_48%] scale-[1.25] -translate-y-[16%] motion-safe:transition-transform motion-safe:duration-700 group-hover:scale-[1.3] motion-safe:group-hover:-translate-y-[16%]"

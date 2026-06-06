@@ -1,12 +1,46 @@
 export const dynamic = "force-static"
+
+import nextDynamic from "next/dynamic";
 import { Navigation } from "@/components/navigation";
-import { ScrollingGallery } from "@/components/scrolling-gallery";
-import { FirstFlightVideo } from "@/components/first-flight-video";
-import { FinalProductVideo } from "@/components/final-product-video";
-import { DroneModelViewer } from "@/components/drone-model-viewer";
-import { ArrowRight, Layers, Cpu, Cog, Zap } from "lucide-react";
+import {
+  LazyMount,
+  SectionPlaceholder,
+} from "@/components/lazy-mount";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
+const FinalProductVideo = nextDynamic(
+  () =>
+    import("@/components/final-product-video").then(
+      (mod) => mod.FinalProductVideo
+    ),
+  { loading: () => <SectionPlaceholder minHeight="20rem" /> }
+);
+
+const ScrollingGallery = nextDynamic(
+  () =>
+    import("@/components/scrolling-gallery").then(
+      (mod) => mod.ScrollingGallery
+    ),
+  { loading: () => <SectionPlaceholder minHeight="55vh" /> }
+);
+
+const DroneModelViewer = nextDynamic(
+  () =>
+    import("@/components/drone-model-viewer").then(
+      (mod) => mod.DroneModelViewer
+    ),
+  { loading: () => <SectionPlaceholder minHeight="600px" /> }
+);
+
+const FirstFlightVideo = nextDynamic(
+  () =>
+    import("@/components/first-flight-video").then(
+      (mod) => mod.FirstFlightVideo
+    ),
+  { loading: () => <SectionPlaceholder minHeight="20rem" /> }
+);
 
 export default function Home() {
   return (
@@ -23,6 +57,7 @@ export default function Home() {
             muted
             loop
             playsInline
+            preload="metadata"
           />
           <div className="absolute inset-0 z-0 bg-background/25" />
 
@@ -91,7 +126,9 @@ export default function Home() {
               </h2>
             </div>
 
-            <FinalProductVideo />
+            <LazyMount minHeight="20rem">
+              <FinalProductVideo />
+            </LazyMount>
           </div>
         </section>
 
@@ -114,7 +151,9 @@ export default function Home() {
             </div>
           </div>
 
-          <ScrollingGallery />
+          <LazyMount minHeight="55vh">
+            <ScrollingGallery />
+          </LazyMount>
         </section>
 
         {/* 3D Model Explorer Section */}
@@ -135,7 +174,9 @@ export default function Home() {
               </p>
             </div>
 
-            <DroneModelViewer />
+            <LazyMount minHeight="600px">
+              <DroneModelViewer />
+            </LazyMount>
            
           </div>
         </section>
@@ -158,7 +199,9 @@ export default function Home() {
               </p>
             </div>
 
-            <FirstFlightVideo />
+            <LazyMount minHeight="20rem">
+              <FirstFlightVideo />
+            </LazyMount>
           </div>
         </section>
 
@@ -223,6 +266,8 @@ export default function Home() {
               alt="Quetzal"
               width={164}
               height={164}
+              loading="lazy"
+              decoding="async"
             />
             <a
                 href="mailto:rojinosman1988@gmail.com"
