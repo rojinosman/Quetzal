@@ -2,8 +2,6 @@ import React from "react"
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
-import { CountdownProvider } from '@/components/countdown-provider'
-import { DeferredCountdown } from '@/components/deferred-countdown'
 import './globals.css'
 
 const GA_MEASUREMENT_ID = 'G-CPV831G41V'
@@ -51,10 +49,7 @@ export default function RootLayout({
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
-        <CountdownProvider>
-          <DeferredCountdown />
-          {children}
-        </CountdownProvider>
+        {children}
         <Analytics />
       </body>
     </html>
